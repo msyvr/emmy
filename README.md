@@ -2,9 +2,10 @@
 
 Evaluation-invariant measurement for multi-agent AI systems.
 
-**Status:** Pre-experiment. Repository setup phase. Program documentation
-will appear in `docs/`; this README will be updated to link to it as each document
-lands.
+**Status:** Pre-experiment. Repository setup phase. The
+[program overview](docs/program-overview.md) is the current canonical
+reference; additional documents will be added to `docs/` as they are
+finalized for public release.
 
 ## The gap
 
