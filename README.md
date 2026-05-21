@@ -37,9 +37,9 @@ null-result protocol.
 
 ## Name
 
-After Emmy Noether (1882–1935), whose foundational work connecting
-symmetries to invariants underlies the framing of evaluation-invariant
-measurement.
+After [Emmy Noether](https://en.wikipedia.org/wiki/Emmy_Noether) (1882–1935),
+whose foundational work connecting symmetries to invariants underlies the
+framing of evaluation-invariant measurement.
 
 ## License
 

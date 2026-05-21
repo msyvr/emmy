@@ -55,7 +55,7 @@ accumulating as silo'd benchmarks.
 
 The framework rests on six commitments.
 
-1. **Multi-scale observables.** Component-level, pairwise, *and* system-level
+1. **Multi-scale observables.** Component-level, pairwise, _and_ system-level
    quantities in the canonical set from the start. Not reductionist. System-
    level observables (correlation length, integrated information, response
    functions) validate the component-level ones by their predictive
@@ -66,11 +66,11 @@ The framework rests on six commitments.
 3. **Dynamic observables as instrumentation.** Response functions and their
    curvature (fragility / anti-fragility) are part of the canonical set from
    the start, defined as perturbation-response quantities. Perturbation
-   protocols are how dynamic observables are *measured*, not a separate
+   protocols are how dynamic observables are _measured_, not a separate
    empirical program. Anti-fragility becomes a measurable curvature, not a
    metaphor.
 4. **Setup reflexivity.** Every empirical claim reports the evaluation-setup
-   class under which it was produced *and* the negative space it admits but
+   class under which it was produced _and_ the negative space it admits but
    does not measure. Reproducibility means setup-class reproducibility.
 5. **Cross-substrate transfer.** Observable definitions are substrate-agnostic.
    First demonstrations are in cooperative MARL; framework design admits
@@ -112,8 +112,8 @@ credibility differentiator that few research programs at this stage carry.
 
 ## 4. First project: paper 1 + library v0.1
 
-**Working title:** *Evaluation-invariant observables for multi-agent
-collectives: invariance, discrimination, transfer.*
+**Working title:** _Evaluation-invariant observables for multi-agent
+collectives: invariance, discrimination, transfer._
 
 The paper makes four falsifiable claims:
 
@@ -121,7 +121,7 @@ The paper makes four falsifiable claims:
    distinguishable by the canonical observables.
 2. **Invariance.** Each canonical observable is invariant under the named
    evaluation-setup transformation group, within seed-variance bounds. A
-   negative-control observable is included that is *not* invariant.
+   negative-control observable is included that is _not_ invariant.
 3. **Transfer.** Observable definitions and interpretations transfer across
    at least two cooperative environments, even though numerical values are
    environment-specific.
@@ -131,23 +131,23 @@ The paper makes four falsifiable claims:
 
 **Canonical observables (current candidates):**
 
-- *O1: Conditional joint policy entropy.* H(a₁,…,a_N | s).
-- *O2: Normalized pairwise mutual information.* I(a_i; a_j | s), normalized.
-- *O3: Response function and fragility curvature.* R(σ) measured under
+- _O1: Conditional joint policy entropy._ H(a₁,…,a_N | s).
+- _O2: Normalized pairwise mutual information._ I(a_i; a_j | s), normalized.
+- _O3: Response function and fragility curvature._ R(σ) measured under
   perturbation of stress parameter σ; fragility index = ∂²R/∂σ² at operating
   point. Sign convention: negative = fragile, near zero = robust, positive =
   anti-fragile.
-- *O_neg (negative control): per-step reward variance.* Expected to fail T3.
+- _O_neg (negative control): per-step reward variance._ Expected to fail T3.
 
 **Evaluation-setup transformation group:**
 
-- *T1 (seed swap)* — invariance expected, near-perfect.
-- *T2 (algorithm swap)* — invariance partial; deviations themselves
+- _T1 (seed swap)_ — invariance expected, near-perfect.
+- _T2 (algorithm swap)_ — invariance partial; deviations themselves
   informative. Pair to be confirmed (see §6).
-- *T3 (reward rescaling)* — invariance expected for O1–O3, violation
+- _T3 (reward rescaling)_ — invariance expected for O1–O3, violation
   expected for O_neg.
-- *T4 (observation channel permutation)* — invariance expected.
-- *T5 (minor environment reparameterization)* — invariance *not* expected;
+- _T4 (observation channel permutation)_ — invariance expected.
+- _T5 (minor environment reparameterization)_ — invariance _not_ expected;
   included to characterize the boundary of the invariance group.
 
 **Library v0.1.** Open-source Python library computing the canonical
@@ -211,18 +211,18 @@ program's framework. Contribution-distinctness window is months, not years.
 
 **Adjacent communities and where the gap remains**:
 
-- *MARL theory and evaluation*: Joel Leibo (Melting Pot) is the closest to
+- _MARL theory and evaluation_: Joel Leibo (Melting Pot) is the closest to
   thinking about measurement at the substrate-vs-population level; others
   (Tuyls, Foerster, Whiteson, Stone, Bowling) are benchmark-focused.
-- *Info-theoretic MARL measurement*: Lizier, Williams & Beer PID,
+- _Info-theoretic MARL measurement_: Lizier, Williams & Beer PID,
   transfer-entropy decompositions, synergy/redundancy frameworks.
   Sophisticated but not organized around evaluation-setup invariance.
-- *Critical-slowing-down*: Scheffer/Lenton tipping-point literature has 20+
+- _Critical-slowing-down_: Scheffer/Lenton tipping-point literature has 20+
   year empirical track record across climate, ecology, finance. Application
   to multi-agent AI is novel; the methodological transfer is established.
-- *Renormalization group in ML*: present but scattered; no programmatic use
+- _Renormalization group in ML_: present but scattered; no programmatic use
   for measurement standards.
-- *Standards bodies*: NIST AI RMF, NIST CAISI, AISI-UK, CEN-CENELEC JTC 21
+- _Standards bodies_: NIST AI RMF, NIST CAISI, AISI-UK, CEN-CENELEC JTC 21
   — explicitly looking for measurement primitives; none yet exist in mature
   form for multi-agent systems.
 
@@ -241,12 +241,12 @@ under which third-party auditors and regulators must work.
 
 Specific technical-to-policy bridges:
 
-- *Fragility curvature → deployment-readiness criteria.*
-- *Setup-class declarations → transparency standards.*
-- *Cross-substrate observables → architecture-agnostic regulation.*
-- *Diversity / role observables → systemic-risk analysis.*
-- *Negative-space reporting → standards humility.*
-- *CSD indicators → early-warning monitoring for deployed AI systems.*
+- _Fragility curvature → deployment-readiness criteria._
+- _Setup-class declarations → transparency standards._
+- _Cross-substrate observables → architecture-agnostic regulation._
+- _Diversity / role observables → systemic-risk analysis._
+- _Negative-space reporting → standards humility._
+- _CSD indicators → early-warning monitoring for deployed AI systems._
 
 Coordination targets: AISI-UK methodology team, NIST CAISI staff, CEN-CENELEC
 JTC 21, Cooperative AI Foundation, OECD AI standards working groups.
@@ -264,7 +264,7 @@ The argument in five steps:
 2. Multi-agent AI systems are collective systems with the same structural
    properties (coordination collapse, emergent monoculture, runaway
    specialization, cascade failures, sudden regime changes).
-3. Renormalization-group analysis predicts *where* catastrophic risk lives —
+3. Renormalization-group analysis predicts _where_ catastrophic risk lives —
    distinguishing setup configurations near critical points (divergent
    susceptibility, long-range correlations, slow relaxation) from those far
    from them.
@@ -276,25 +276,7 @@ The argument in five steps:
    enabling continuous deployment monitoring with intervention triggers
    before catastrophic transitions occur.
 
-## 10. Anticipated reviewer objections
-
-- *"Outsider to MARL."* Substantive; paper 1's related-work section will
-  cover prior info-theoretic MARL measurement (Lizier, Williams & Beer PID,
-  transfer entropy, synergy/redundancy) with crisp articulation of what's
-  *additionally* claimed.
-- *"Physics framing is rhetorical."* The program commits to specific
-  transformation groups, specific invariance demonstrations, specific
-  falsification criteria. None of these are present in rhetorical imports.
-- *"Equilibrium statistical mechanics is the wrong tool for non-equilibrium
-  catastrophic events."* Equilibrium-grounded methods are the validated
-  scaffold *for* non-equilibrium tooling in every adjacent field (climate,
-  ecology, finance); skipping that scaffold has not been productive anywhere
-  it has been tried.
-- *"Single-author multi-year program is ambitious."* Acknowledged risk;
-  mitigation is co-author search in Year 1 and adoption-test signal during
-  falsification phase.
-
-## 11. What success looks like at month 6 and month 12
+## 10. What success looks like at month 6 and month 12
 
 **Month 6:** Falsification-phase outcome resolved. Either the foundational
 invariance claims survive empirical pressure (proceed to writeup of full
@@ -311,7 +293,7 @@ The bar held throughout: honest reporting of what the experiments show.
 Negative results published, not suppressed; reframings documented, not
 hidden.
 
-## 12. Document map
+## 11. Document map
 
 This is currently the only public document in `docs/`. Additional
 documentation will be added as it is finalized for public release.
