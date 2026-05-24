@@ -2,10 +2,11 @@
 
 Evaluation-invariant measurement for multi-agent AI systems.
 
-**Status:** Pre-experiment. Repository setup phase. The
+**Status:** Pre-experiment. The
 [program overview](docs/program-overview.md) is the current canonical
 reference; additional documents will be added to `docs/` as they are
-finalized for public release.
+finalized for public release. A small runnable demonstration of the core
+idea is in [`demo/`](demo/).
 
 ## The gap
 
@@ -34,6 +35,15 @@ a small canonical set of evaluation-invariant observables for cooperative
 multi-agent collectives, with pre-registered falsifiable claims
 (discrimination, invariance, transfer, system-validation) and a published
 null-result protocol.
+
+## Demo
+
+[`demo/`](demo/) contains a small, runnable instance of the central claim:
+two tabular Q-learning agents in the iterated prisoner's dilemma, showing
+that behavioral observables (coordination, action autocorrelation) are
+invariant under reward rescaling while reward-based quantities are not.
+It is a smoke-test of the measurement machinery, not a research result.
+See [`demo/README.md`](demo/README.md).
 
 ## Name
 

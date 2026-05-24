@@ -289,7 +289,7 @@ produces actionable feedback.
 TMLR). Library v0.2 released with O3 added. At least one named adoption
 commitment from an external research group. Paper 2 (phenomenology) underway.
 
-The bar held throughout: honest reporting of what the experiments show.
+The bar held throughout: transparent reporting of what the experiments show.
 Negative results published, not suppressed; reframings documented, not
 hidden.
 
