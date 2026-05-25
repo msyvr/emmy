@@ -23,12 +23,16 @@ inherit are crystallizing now.
 ## What this is
 
 A research program establishing measurement foundations for multi-agent
-AI: evaluation-invariant observables, perturbation–response analysis of
-collective fragility, and lengthening recovery times as early warning
-of catastrophic transitions. Methodological orientation drawn from
-physics, systems biology, and statistical mechanics; first-principles
-measurement theory designed to complement, not replace, benchmark-based
-evaluation.
+AI: evaluation-invariant observables for collective behavior, computed from
+action–observation streams without privileged model access — making
+cross-paper claims comparable and giving external evaluators an inspection
+layer for deployed agent collectives that single-model methods don't cover.
+Perturbation–response analysis characterizes collective fragility;
+critical-slowing-down indicators are carried as a tested hypothesis for
+early warning of catastrophic transitions, not a headline. Methodological
+orientation drawn from physics, systems biology, and statistical mechanics;
+first-principles measurement theory designed to complement, not replace,
+benchmark-based evaluation.
 
 The first deliverable is a paper plus open-source library establishing
 a small canonical set of evaluation-invariant observables for cooperative

@@ -70,10 +70,13 @@ uv run python demo/ipd_invariance.py     # writes results/ table, csv, figure
   the behavioral observable that is both clearly non-trivial *and* invariant.
   No hyperparameters were tuned to manufacture a prettier number — the
   invariance ratio is 1.00 in every regime regardless.
-- **Action autocorrelation is a critical-slowing-down indicator** of the kind
-  used as an early-warning signal in ecology, finance, and climate. It is in
-  the demo deliberately: the same family of indicators is what a deployed-system
-  monitoring tool would compute from agent action logs.
+- **Action autocorrelation is computed from the action stream alone** — the
+  external, no-privileged-access surface an outside evaluator can see, which is
+  the headline use: rigorous behavioral measurement of a deployed collective from
+  logs. (It is also a critical-slowing-down indicator from the tipping-point
+  literature; whether such indicators give *early warning* in multi-agent AI is a
+  hypothesis the program tests, not an assumption — see the overview's
+  "AI safety relevance.")
 
 ## Relationship to the program
 

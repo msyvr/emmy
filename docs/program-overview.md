@@ -5,11 +5,15 @@ canonical reference for the program; other documents will be added to `docs/`
 as they are finalized for public release.
 
 **One-paragraph framing.** Research program on measurement foundations of
-multi-agent AI systems: evaluation-invariant observables, perturbation–response
-analysis of collective fragility, and lengthening recovery times as early
-warning of catastrophic transitions. Methodological orientation drawn from
-physics, systems biology, and statistical mechanics, informing first-principles
-measurement theory to complement benchmark-based evaluations.
+multi-agent AI: a small canonical set of evaluation-invariant observables for
+collective behavior, computed from action–observation streams without privileged
+model access — making cross-paper claims comparable and giving external evaluators
+an inspection layer for deployed agent collectives that single-model methods do not
+provide. Perturbation–response analysis characterizes collective fragility;
+critical-slowing-down indicators are carried as a _tested hypothesis_ for early
+warning of catastrophic transitions, not a headline guarantee. Methodological
+orientation drawn from physics, systems biology, and statistical mechanics;
+complements benchmark-based evaluation.
 
 ---
 
@@ -251,30 +255,43 @@ Specific technical-to-policy bridges:
 Coordination targets: AISI-UK methodology team, NIST CAISI staff, CEN-CENELEC
 JTC 21, Cooperative AI Foundation, OECD AI standards working groups.
 
-## 9. Catastrophic-risk relevance
+## 9. AI safety relevance
 
-The framework provides early-warning measurement infrastructure for
-catastrophic regime shifts in deployed multi-agent AI systems, using the
-same physics that successfully predicts ecological collapse, financial
-crashes, and climate tipping points.
+The program's safety relevance is a precondition, not a prediction — anchored in a
+deployment reality rather than a forecast.
 
-The argument in five steps:
+**The inspection gap (the headline).** Powerful models from many developers are
+increasingly composed into _collectives_ by agent frameworks: multiple model-agents
+acting on a shared task or environment. AI-control and single-model evaluation assess
+the trustworthiness of _individual_ models; they do not characterize the collective's
+emergent behavior, and no external inspection layer for it exists. The framework
+builds that layer — rigorous, characterized measurement of collective behavior from
+action–observation streams with no privileged model access, which is exactly the
+surface a third-party evaluator or regulator can observe. It complements AI-control
+rather than competing with it: control protocols increasingly involve multiple agents
+(e.g. untrusted monitors), but they evaluate the trust relationship, not the
+collective dynamics those protocols run inside.
 
-1. Catastrophic events in collective systems live near critical points.
-2. Multi-agent AI systems are collective systems with the same structural
-   properties (coordination collapse, emergent monoculture, runaway
-   specialization, cascade failures, sudden regime changes).
-3. Renormalization-group analysis predicts _where_ catastrophic risk lives —
-   distinguishing setup configurations near critical points (divergent
-   susceptibility, long-range correlations, slow relaxation) from those far
-   from them.
-4. CSD indicators (autocorrelation, variance, recovery time, correlation
-   length) have a 20+ year validated empirical track record as early-warning
-   signals across heterogeneous substrates.
-5. The same indicators are computable on multi-agent AI rollout data, from
-   action-observation streams alone, with no privileged-access requirement —
-   enabling continuous deployment monitoring with intervention triggers
-   before catastrophic transitions occur.
+**Falsifiable, composable claims.** Robustness, alignment, and emergent-failure-mode
+claims about multi-agent systems are uninterpretable without measurement that travels
+across testing setups; with it, they become comparable across labs and falsifiable.
+This is the precondition for downstream evaluation, audit, and standards work, and its
+value does not depend on any particular theory of where multi-agent risk concentrates.
+
+**Anti-fragility and cross-substrate generalization.** The dynamic observables turn
+"how a collective degrades under stress" into a measurable, comparable object;
+substrate-agnostic definitions let claims survive architectural change.
+
+**Early warning for catastrophic transitions — a hypothesis under test.** The framework
+includes critical-slowing-down indicators (autocorrelation, variance, recovery time,
+correlation length) that are validated precursors of catastrophic regime shifts in
+climate, ecology, and finance and are computable on rollout data without privileged
+access. _Whether multi-agent AI transitions carry the same signatures is an open
+empirical question_ — some collective failures may be discrete or adversarial, with no
+slow precursor. The program treats early warning as a hypothesis to test, not a
+guarantee: where the signatures exist, the indicators apply; where they don't, that
+boundary is itself a finding. This is the natural bridge for catastrophic-risk-focused
+audiences — a complement to the headline, not the foundation.
 
 ## 10. What success looks like at month 6 and month 12
 
