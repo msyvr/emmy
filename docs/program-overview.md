@@ -1,16 +1,15 @@
 # Measurement Foundations for Multi-Agent AI: Program Overview
 
 **Status:** Current synthesis, 2026-05-25. Pre-experiment. This document is the
-canonical reference for the program; other documents will be added to `docs/`
-as they are finalized for public release.
+canonical reference for the program; other documents will be added to `docs/`.
 
-**One-paragraph framing.** Emmy builds measurement foundations for multi-agent
-AI: a small, canonical set of evaluation-invariant observables for collective
+**Summary.** Emmy builds measurement foundations for multi-agent
+AI: a canonical set of evaluation-invariant observables for collective
 behavior, computed from action–observation streams without privileged model
 access. Two payoffs follow — cross-paper claims about coordination, robustness,
 and failure become comparable, and external evaluators gain an inspection layer
-for deployed agent collectives that single-model methods do not provide. The set
-is multi-scale and includes dynamic response functions, so a collective's
+for deployed agent collectives that single-model methods aren't equipped to provide.
+The set is multi-scale and includes dynamic response functions, so a collective's
 fragility under stress is a measured quantity. The orientation is drawn from
 physics, systems biology, and statistical mechanics, and complements
 benchmark-based evaluation. This is pre-experiment work: the first deliverable is
@@ -18,7 +17,7 @@ a paper plus open-source library with pre-registered, falsifiable claims.
 
 ---
 
-## 1. Why this work
+## 1. Motivation
 
 Multi-agent AI systems — large-language-model agent ensembles,
 reinforcement-learning agent collectives — are moving from research into
@@ -42,9 +41,16 @@ Four consequences:
   experiment maps to deployment, whether a collective is fragile under stress,
   whether diversity helps or hurts robustness — none answerable cleanly
   without measurement that travels across evaluation setups.
-- **Standards are crystallizing now.** Reporting conventions are being formed
-  through accretion. The window for foundational influence is the next
-  12–18 months.
+- **The clock is capability, not convention.** Reporting conventions are forming
+  now, but the binding deadline is the trajectory: the field is racing toward
+  autonomous AI R&D, carried out by agent collectives — "synthetic teams" of AI
+  systems managing one another. Anthropic co-founder Jack Clark, in his _Import
+  AI_ newsletter, puts ~60% on AI systems autonomously running their own R&D by
+  the end of 2028
+  ([Import AI 455](https://importai.substack.com/p/import-ai-455-automating-ai-research)).
+  The inspection layer for collective behavior has to exist before collectives do
+  high-stakes autonomous work — and once humans leave the loop, external
+  measurement is the oversight handle that remains.
 
 The gap is foundational, not phenomenological. Closing it requires committing
 to a canonical set of observables with explicit invariance properties, not
