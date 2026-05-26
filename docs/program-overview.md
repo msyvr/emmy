@@ -1,31 +1,33 @@
 # Measurement Foundations for Multi-Agent AI: Program Overview
 
-**Status:** Current synthesis, 2026-05-19. Pre-experiment. This document is the
+**Status:** Current synthesis, 2026-05-25. Pre-experiment. This document is the
 canonical reference for the program; other documents will be added to `docs/`
 as they are finalized for public release.
 
-**One-paragraph framing.** Research program on measurement foundations of
-multi-agent AI: a small canonical set of evaluation-invariant observables for
-collective behavior, computed from action–observation streams without privileged
-model access — making cross-paper claims comparable and giving external evaluators
-an inspection layer for deployed agent collectives that single-model methods do not
-provide. Perturbation–response analysis characterizes collective fragility;
-critical-slowing-down indicators are carried as a _tested hypothesis_ for early
-warning of catastrophic transitions, not a headline guarantee. Methodological
-orientation drawn from physics, systems biology, and statistical mechanics;
-complements benchmark-based evaluation.
+**One-paragraph framing.** Emmy builds measurement foundations for multi-agent
+AI: a small, canonical set of evaluation-invariant observables for collective
+behavior, computed from action–observation streams without privileged model
+access. Two payoffs follow — cross-paper claims about coordination, robustness,
+and failure become comparable, and external evaluators gain an inspection layer
+for deployed agent collectives that single-model methods do not provide. The set
+is multi-scale and includes dynamic response functions, so a collective's
+fragility under stress is a measured quantity. The orientation is drawn from
+physics, systems biology, and statistical mechanics, and complements
+benchmark-based evaluation. This is pre-experiment work: the first deliverable is
+a paper plus open-source library with pre-registered, falsifiable claims.
 
 ---
 
 ## 1. Why this work
 
-Multi-agent AI systems — reinforcement-learning agent collectives,
-large-language-model agent ensembles, emerging active-inference multi-agent
-setups — are moving from research substrate to deployment substrate faster
-than their measurement practices are maturing. Claims about coordination,
-robustness, emergent failure modes, and catastrophic vulnerabilities are
-dominated by joint return on benchmarks and ad-hoc behavioral indicators
-chosen per paper.
+Multi-agent AI systems — large-language-model agent ensembles,
+reinforcement-learning agent collectives — are moving from research into
+deployment faster than their measurement practices are maturing. The tools we
+have were built for other things: single-model evaluation and interpretability
+characterize one model at a time, and multi-agent results are dominated by joint
+return on benchmarks and ad-hoc behavioral indicators chosen per paper. None of
+these characterize what a collective does in a way that travels beyond the setup
+that produced it.
 
 Four consequences:
 
@@ -71,8 +73,7 @@ The framework rests on six commitments.
    curvature (fragility / anti-fragility) are part of the canonical set from
    the start, defined as perturbation-response quantities. Perturbation
    protocols are how dynamic observables are _measured_, not a separate
-   empirical program. Anti-fragility becomes a measurable curvature, not a
-   metaphor.
+   empirical program. Anti-fragility becomes a measurable curvature.
 4. **Setup reflexivity.** Every empirical claim reports the evaluation-setup
    class under which it was produced _and_ the negative space it admits but
    does not measure. Reproducibility means setup-class reproducibility.
@@ -80,15 +81,16 @@ The framework rests on six commitments.
    First demonstrations are in cooperative MARL; framework design admits
    later extension to LLM-multi-agent and active-inference systems with the
    same observables.
-6. **Equilibrium-grounded scaffolding for non-equilibrium catastrophic-event
-   detection.** Equilibrium statistical mechanics and renormalization-group
-   theory are not the end goal; they are the load-bearing scaffolding for
-   detecting non-equilibrium regime shifts. Critical-slowing-down (CSD)
-   indicators — autocorrelation, variance, recovery time, correlation length
-   — emerge from the physics of systems approaching critical points and are
-   computable from equilibrium-style observations. This is the validated
-   pattern used in climate, ecology, and finance: equilibrium-grounded
-   measurement to detect tipping points before they occur.
+6. **Equilibrium-grounded measurement scaffolding.** Equilibrium statistical
+   mechanics and renormalization-group theory provide the load-bearing
+   machinery for defining observables that compose across scales and stay
+   stable under evaluation-setup changes. The same machinery extends to
+   non-equilibrium regime shifts: critical-slowing-down (CSD) indicators —
+   autocorrelation, variance, recovery time, correlation length — emerge from
+   the physics of systems near critical points and are computable from the same
+   rollout data. That extension is the validated pattern used in climate,
+   ecology, and finance; here it is one application of the scaffolding, pursued
+   as a hypothesis under test (see §9), not a foundational claim.
 
 ## 3. Methodological discipline
 
@@ -238,8 +240,8 @@ but does not load-bear the first paper.
 
 ## 8. Governance and standards relevance
 
-Audit-friendly architecture is a design constraint, not after-the-fact
-framing. Library computes observables from action-observation streams with
+Audit-friendly architecture is a founding design constraint. The library
+computes observables from action-observation streams with
 no privileged-access requirement; this matches the interface conditions
 under which third-party auditors and regulators must work.
 
@@ -257,15 +259,21 @@ JTC 21, Cooperative AI Foundation, OECD AI standards working groups.
 
 ## 9. AI safety relevance
 
-The program's safety relevance is a precondition, not a prediction — anchored in a
-deployment reality rather than a forecast.
+The program's safety relevance is a precondition for other safety work, not a bet on
+where risk will concentrate.
 
 **The inspection gap (the headline).** Powerful models from many developers are
 increasingly composed into _collectives_ by agent frameworks: multiple model-agents
 acting on a shared task or environment. AI-control and single-model evaluation assess
 the trustworthiness of _individual_ models; they do not characterize the collective's
-emergent behavior, and no external inspection layer for it exists. The framework
-builds that layer — rigorous, characterized measurement of collective behavior from
+emergent behavior, and no external inspection layer for it exists. That collective
+surface is already a demonstrated concern, not a thought experiment: Anthropic's
+alignment team finds that multi-agent _AI organizations_ can be more effective but
+_less aligned_ than the individual agents composing them, and argues such systems
+need testing for misalignment across organizational structures — exactly the
+measurement no single-model check provides
+([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)). The
+framework builds that layer — rigorous, characterized measurement of collective behavior from
 action–observation streams with no privileged model access, which is exactly the
 surface a third-party evaluator or regulator can observe. It complements AI-control
 rather than competing with it: control protocols increasingly involve multiple agents
@@ -307,8 +315,6 @@ TMLR). Library v0.2 released with O3 added. At least one named adoption
 commitment from an external research group. Paper 2 (phenomenology) underway.
 
 The bar held throughout: transparent reporting of what the experiments show.
-Negative results published, not suppressed; reframings documented, not
-hidden.
 
 ## 11. Document map
 

@@ -10,37 +10,51 @@ idea is in [`demo/`](demo/).
 
 ## The gap
 
-Multi-agent AI systems — reinforcement-learning agent collectives,
-large-language-model agent ensembles, and emerging active-inference
-multi-agent setups — are moving toward deployment faster than their
-measurement practices are maturing. Empirical claims about coordination,
-robustness, and emergent failure modes are reported in apparatus-specific
-quantities (joint return, ad-hoc behavioral indicators) that do not compose
-across papers and do not transfer across deployment conditions. The
-reporting conventions that downstream safety and evaluation work will
-inherit are crystallizing now.
+AI agents increasingly work in groups — language-model agents that call
+tools and coordinate with one another, reinforcement-learning agents
+acting in a shared environment. These collectives are already moving
+into real-world deployment.
 
-## What this is
+We have little settled practice for measuring what such a group does
+collectively. The closest tools look elsewhere: single-model methods —
+evaluation, interpretability, AI control — inspect one model at a time,
+and reveal little about the behavior of the group. Multi-agent results,
+where reported, are expressed in terms tied to one setup — a score that
+depends on a particular environment's payoffs, a behavioral signal
+defined for a single experiment. Those numbers rarely carry from one
+paper to the next, or from a lab setup to a deployment. And the reporting
+conventions that downstream safety and evaluation work will inherit are
+being fixed now — before the measurement practice supporting them is
+sound.
 
-A research program establishing measurement foundations for multi-agent
-AI: evaluation-invariant observables for collective behavior, computed from
-action–observation streams without privileged model access — making
-cross-paper claims comparable and giving external evaluators an inspection
-layer for deployed agent collectives that single-model methods don't cover.
-Perturbation–response analysis characterizes collective fragility;
-critical-slowing-down indicators are carried as a tested hypothesis for
-early warning of catastrophic transitions, not a headline. Methodological
-orientation drawn from physics, systems biology, and statistical mechanics;
-first-principles measurement theory designed to complement, not replace,
-benchmark-based evaluation.
+## The bridge
 
-The first deliverable is a paper plus open-source library establishing
-a small canonical set of evaluation-invariant observables for cooperative
-multi-agent collectives, with pre-registered falsifiable claims
-(discrimination, invariance, transfer, system-validation) and a published
+Emmy is a research program building the measurement foundations for
+groups of AI agents. The hypothesis is simple: the right unit of
+measurement is the *observable* — a quantity computed from what the
+agents do, their actions and observations, defined so that it does not
+change when you rescale rewards or relabel a setup. Get a small, standard
+set of these right, and two things follow. Claims about coordination,
+robustness, and failure become comparable across papers. And an external
+evaluator gains a way to inspect a deployed group of agents directly —
+the inspection layer that single-model methods do not provide.
+
+Because the measurement depends only on behavior, it requires no
+privileged access to the underlying models, and the same instruments
+apply whether the agents are reinforcement-learning policies,
+language-model ensembles, or active-inference systems.
+
+The first deliverable is a paper and an open-source library: a small,
+canonical set of these observables for cooperative multi-agent
+collectives, with pre-registered, falsifiable claims and a published
 null-result protocol.
 
-## Demo
+Two limits of note. First, this is pre-experiment work — these claims are
+not yet validated. Second, the framework measures behavior, not internal
+cognition — a complement to benchmark evaluation and interpretability, not
+a replacement.
+
+## Demo: invariance under reward rescaling
 
 [`demo/`](demo/) contains a small, runnable instance of the central claim:
 two tabular Q-learning agents in the iterated prisoner's dilemma, showing
@@ -49,7 +63,7 @@ invariant under reward rescaling while reward-based quantities are not.
 It is a smoke-test of the measurement machinery, not a research result.
 See [`demo/README.md`](demo/README.md).
 
-## Name
+## Emmy Noether
 
 After [Emmy Noether](https://en.wikipedia.org/wiki/Emmy_Noether) (1882–1935),
 whose foundational work connecting symmetries to invariants underlies the
@@ -58,8 +72,3 @@ framing of evaluation-invariant measurement.
 ## License
 
 Apache 2.0 — see `LICENSE`.
-
-## Contact
-
-Issues and discussion via this repository. Direct correspondence:
-[email].
