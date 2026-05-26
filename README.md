@@ -30,7 +30,11 @@ sound.
 ## The bridge
 
 Emmy is a research program building the measurement foundations for
-groups of AI agents. The hypothesis is simple: the right unit of
+groups of AI agents. Its approach is unusual: instead of starting from a human
+idea of what the agents are doing — cooperating, competing, deceiving — and
+reaching for a number to stand in for it, Emmy starts from quantities it can
+measure cleanly, then asks what they reveal about safety. The hypothesis is
+simple: the right unit of
 measurement is the *observable* — a quantity computed from what the
 agents do, their actions and observations, defined so that it does not
 change when you rescale rewards or relabel a setup. Get a small, standard

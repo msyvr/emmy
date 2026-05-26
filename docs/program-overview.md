@@ -59,6 +59,18 @@ demonstrated to discriminate behaviors that joint return cannot, and packaged
 as community infrastructure that compounds across the field rather than
 accumulating as silo'd benchmarks.
 
+**The stance is measurement-first.** Most multi-agent and safety work starts from
+a human-meaningful concept — cooperation, deception, empowerment, power-seeking —
+and looks for a proxy that captures it in some environment. This program inverts
+that. It starts from quantities that are operationally defined and invariant across
+evaluation setups, and treats their relationship to safety as an empirical question
+to be earned, not settled by naming. The wager is the one that has paid off
+repeatedly in the history of measurement: the right invariants usually have to be
+in hand before the questions that matter can be posed precisely. The approach is
+deliberately unusual for AI safety — its payoff depends on the bridge from invariant
+observables to safety-relevant behavior being real, which the program treats as
+something to demonstrate (see §9), not assert.
+
 The framework rests on six commitments.
 
 1. **Multi-scale observables.** Component-level, pairwise, _and_ system-level
@@ -212,8 +224,11 @@ in before pilot.
 ## 7. Landscape position
 
 **Closest proximate work**: Polani / Tiomkin, multi-agent empowerment
-(April 2026). Info-theoretic depth, MARL substrate, three steps from this
-program's framework. Contribution-distinctness window is months, not years.
+(April 2026) — the nearest methodological neighbors, information-theoretic and
+MARL-native. But empowerment is a _quantity_ (an action→future channel capacity),
+not an invariance framework: a candidate observable to characterize, not a
+competing standard. The proximity matters for collaboration and credibility — a
+MARL-native co-author or adopter — more than for competition.
 
 **Adjacent communities and where the gap remains**:
 
