@@ -64,7 +64,10 @@ a human-meaningful concept — cooperation, deception, empowerment, power-seekin
 and looks for a proxy that captures it in some environment. This program inverts
 that. It starts from quantities that are operationally defined and invariant across
 evaluation setups, and treats their relationship to safety as an empirical question
-to be earned, not settled by naming. The wager is the one that has paid off
+to be earned, not settled by naming. The move is not new — it is the discipline
+evolutionary biology brought to traits once assumed adaptive (Gould & Lewontin's
+"spandrels," 1979): build the controlled alternative and measure, rather than read
+function into what you observe. The wager is the one that has paid off
 repeatedly in the history of measurement: the right invariants usually have to be
 in hand before the questions that matter can be posed precisely. The approach is
 deliberately unusual for AI safety — its payoff depends on the bridge from invariant
