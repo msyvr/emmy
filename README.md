@@ -24,24 +24,27 @@ depends on a particular environment's payoffs, a behavioral signal
 defined for a single experiment. Those numbers rarely carry from one
 paper to the next, or from a lab setup to a deployment. And the reporting
 conventions that downstream safety and evaluation work will inherit are
-being fixed now — before the measurement practice supporting them is
+taking root now — before the measurement practice supporting them is
 sound.
 
 ## The bridge
 
 Emmy is a research program building the measurement foundations for
-groups of AI agents. Its approach is unusual: instead of starting from a human
-idea of what the agents are doing — cooperating, competing, deceiving — and
-reaching for a number to stand in for it, Emmy starts from quantities it can
-measure cleanly, then asks what they reveal about safety. The hypothesis is
-simple: the right unit of
-measurement is the *observable* — a quantity computed from what the
+groups of AI agents. Its approach is atypical: instead of starting from
+an anthropomorphized characterization of what the agents are doing —
+cooperating, competing, deceiving — and building a proxy metric around
+those behaviors, Emmy starts from measurable quantities and asks what
+those reveal about safety and alignment.
+
+In its simplest form, the hypothesis is that the right unit of
+measurement is the _observable_ — a quantity computed from what the
 agents do, their actions and observations, defined so that it does not
-change when you rescale rewards or relabel a setup. Get a small, standard
-set of these right, and two things follow. Claims about coordination,
-robustness, and failure become comparable across papers. And an external
-evaluator gains a way to inspect a deployed group of agents directly —
-the inspection layer that single-model methods do not provide.
+change when you rescale rewards or relabel a setup. A standard
+set of such observables yields two useful outcomes: 1. Claims about
+coordination, robustness, and failure become comparable across papers. 2.
+An external evaluator gains a way to inspect a deployed group of agents
+directly — the inspection layer that single-model methods aren't equipped
+to provide.
 
 Because the measurement depends only on behavior, it requires no
 privileged access to the underlying models, and the same instruments
@@ -53,14 +56,14 @@ canonical set of these observables for cooperative multi-agent
 collectives, with pre-registered, falsifiable claims and a published
 null-result protocol.
 
-Two limits of note. First, this is pre-experiment work — these claims are
+A couple of notes: First, this is pre-experiment work — these claims are
 not yet validated. Second, the framework measures behavior, not internal
-cognition — a complement to benchmark evaluation and interpretability, not
-a replacement.
+cognition — making it complementary to benchmark evaluation and
+interpretability.
 
 ## Demo: invariance under reward rescaling
 
-[`demo/`](demo/) contains a small, runnable instance of the central claim:
+[`demo/`](demo/) contains a small, runnable smoke-test of the measurement machinery on the simplest, provable case — reward rescaling, where behavioral invariance follows from policy-invariance:
 two tabular Q-learning agents in the iterated prisoner's dilemma, showing
 that behavioral observables (coordination, action autocorrelation) are
 invariant under reward rescaling while reward-based quantities are not.

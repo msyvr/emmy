@@ -1,8 +1,11 @@
 """Evaluation-invariance of behavioral observables under reward rescaling.
 
-The smallest possible instance of the program's central claim: some quantities
-describe *behavior* and travel across evaluation-setup changes, others describe
-*reward outcomes* and do not.
+A smoke-test on the simplest, *provable* corner of the program's invariance
+question: under reward rescaling, action-derived quantities are invariant (the
+greedy policy is unchanged, so the behavior is too) while reward-derived quantities
+scale. This exercises the measurement pipeline on a case with a known answer; it does
+not, on its own, evidence the harder bet -- invariance under algorithm or environment
+changes, where the answer is genuinely unknown.
 
 Setup: two tabular Q-learning agents play the iterated prisoner's dilemma. We
 run a controlled experiment -- per seed, the *only* thing varied is the reward

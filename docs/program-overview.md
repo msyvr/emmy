@@ -13,7 +13,9 @@ The set is multi-scale and includes dynamic response functions, so a collective'
 fragility under stress is a measured quantity. The orientation is drawn from
 physics, systems biology, and statistical mechanics, and complements
 benchmark-based evaluation. This is pre-experiment work: the first deliverable is
-a paper plus open-source library with pre-registered, falsifiable claims.
+a paper plus open-source library — an open, reproducible characterization of which
+observables travel across evaluation setups and which discriminate, not a set
+asserted in advance.
 
 ---
 
@@ -52,33 +54,46 @@ Four consequences:
   high-stakes autonomous work — and once humans leave the loop, external
   measurement is the oversight handle that remains.
 
-The gap is foundational, not phenomenological. Closing it requires committing
-to a canonical set of observables with explicit invariance properties, not
-producing another phenomenology paper.
+The gap is foundational, and closing it starts with finding out whether observables
+with explicit invariance properties exist for collective behavior at all — and which.
 
 ## 2. Thesis
 
-The program establishes a measurement framework: a small canonical set of
-observables for collective state and collective response, each defined with
-an explicit invariance group under evaluation-setup transformations,
-demonstrated to discriminate behaviors that joint return cannot, and packaged
-as community infrastructure that compounds across the field rather than
-accumulating as silo'd benchmarks.
+The program's first project is empirical and diagnostic. It does not assume a
+canonical set of evaluation-invariant observables exists and set out to validate it;
+it asks whether such observables exist at all, and which. Take a battery of candidate
+observables for collective behavior — information-theoretic, dynamical, and
+structural quantities, and their combinations — and measure them across existing
+multi-agent environments and policies under a defined group of evaluation-setup
+transformations (seed, algorithm, reward scale, observation layout, environment
+reparameterization). For each candidate, characterize two things jointly: how
+invariant it is across those transformations, and how well it discriminates
+collective behaviors that joint return cannot. The deliverable is the resulting
+map — which observables travel across setups, which discriminate, and where the two
+trade off — released as an open library of measured observables with their
+invariance-and-discrimination profiles. Whether a usefully-invariant,
+usefully-discriminating set exists is the question the study answers, not a premise
+it assumes; a finding that none exists, or that invariance and discrimination are
+fundamentally in tension, is itself a result worth publishing and a guide for anyone
+building multi-agent evaluations.
 
-**The stance is measurement-first.** Most multi-agent and safety work starts from
-a human-meaningful concept — cooperation, deception, empowerment, power-seeking —
-and looks for a proxy that captures it in some environment. This program inverts
-that. It starts from quantities that are operationally defined and invariant across
-evaluation setups, and treats their relationship to safety as an empirical question
-to be earned, not settled by naming. The move is not new — it is the discipline
-evolutionary biology brought to traits once assumed adaptive (Gould & Lewontin's
-"spandrels," 1979): build the controlled alternative and measure, rather than read
-function into what you observe. The wager is the one that has paid off
-repeatedly in the history of measurement: the right invariants usually have to be
-in hand before the questions that matter can be posed precisely. The approach is
-deliberately unusual for AI safety — its payoff depends on the bridge from invariant
-observables to safety-relevant behavior being real, which the program treats as
-something to demonstrate (see §9), not assert.
+**The stance is measurement-first.** Most multi-agent and safety work starts from a
+human-meaningful concept — cooperation, deception, empowerment, power-seeking — and
+looks for a proxy that captures it in some environment. This program inverts that: it
+starts from quantities that are operationally defined and measurable from behavior,
+and treats both their invariance structure and their relationship to safety as
+empirical questions to be characterized, not settled by naming. The discrimination
+target is deliberately left open — the aim is to surface emergent collective
+properties without pre-deciding which matter or under what conditions they show up.
+The lens throughout is safety/alignment rather than capability (the two are confounded
+in practice, so both will appear); the cooperative–neutral–adversarial range of team
+objectives is one slice that gets spanned in passing, not a privileged axis. The move
+is not new — it is the discipline evolutionary biology brought to traits once assumed
+adaptive (Gould & Lewontin's "spandrels," 1979): build the controlled alternative and
+measure, rather than read function into what you observe. The approach is deliberately
+unusual for AI safety — its payoff depends on the bridge from measured observables to
+safety-relevant behavior being real, which the program treats as something to
+demonstrate (see §9), not assert.
 
 The framework rests on six commitments.
 
@@ -115,48 +130,56 @@ The framework rests on six commitments.
 
 ## 3. Methodological discipline
 
-The single most distinctive feature of the program is the **falsification
-phase** built into Year 1.
+The discipline matched to a discovery study is not pre-registration — that is a
+tool for *confirmatory* hypothesis-testing, and forcing it onto exploratory
+characterization buys rigidity and perverse design incentives (a test no one wants
+to fail gets designed to be easy to pass) more than rigor. The discipline here is
+**systematic coverage, complete reporting, and reproducibility**:
 
-- A pre-registered set of go/no-go criteria for the foundational claims —
-  posted to OSF before pilot experiments begin.
-- A negative-control observable (per-step reward variance, currently)
-  included specifically because it is expected to fail the T3 invariance
-  test. Demonstrates that the invariance claim is discriminating, not
-  vacuous.
-- Three predefined pivots, one for each likely failure mode, so that
-  negative results trigger a defined next step rather than ad-hoc reframing.
-- Three falsification streams: Layer 2 empirical invariance, Layer 4
-  policy-relevance, and an adoption test seeking concrete commitments to
-  use the library from named labs.
-- Willingness to publish negative results, including a "null result protocol"
-  paper that documents what didn't work and why.
+- **Declared scope, swept completely.** The candidate battery, the transformation
+  group, and the environments/policies are fixed and stated up front, then swept as
+  a full grid. The guard against cherry-picking is that the *whole* grid is reported
+  — including observables that neither travel nor discriminate — not a pre-committed
+  go/no-go on a favored hypothesis.
+- **Profiles, not verdicts.** Invariance and discrimination are reported as
+  continuous quantities with seed-variance bands, not binary "is/isn't invariant"
+  labels. Validity is not binary; "how invariant, under which transformations,
+  within what bounds" is the honest unit.
+- **Reproducibility as the primary contribution.** Code, configs, environments, and
+  the measured-observable library are released so the community can re-analyze,
+  re-run, and build on the map — the open-science investment that compounds far more
+  than a pre-registration does.
+- **Negative results are inherent, not bolted on.** Because the deliverable is the
+  map, an observable that fails to travel or discriminate is a reported data point,
+  not a "failed" experiment — no pre-registration is needed to make null findings
+  publishable.
 
-Pre-registered go/no-go criteria with predefined pivots are standard in
-physics and clinical trials, almost unheard of in ML. The discipline pays
-off twice — as epistemic insurance against years of wasted work, and as a
-credibility differentiator that few research programs at this stage carry.
+Pre-registration is held in reserve for a later, *specific* confirmatory claim — if
+and when the program makes one (e.g. "observable O is invariant under transformation
+T within bound ε"). That is the regime it was built for; this first, map-making phase
+is not.
 
 ## 4. First project: paper 1 + library v0.1
 
-**Working title:** _Evaluation-invariant observables for multi-agent
-collectives: invariance, discrimination, transfer._
+**Working title:** _Which observables of multi-agent collective behavior travel across
+evaluation setups, and which discriminate? An empirical characterization._
 
-The paper makes four falsifiable claims:
+The paper characterizes four things, each reported as a measured profile across the
+battery rather than asserted:
 
-1. **Discrimination.** Configurations indistinguishable by joint return are
-   distinguishable by the canonical observables.
-2. **Invariance.** Each canonical observable is invariant under the named
-   evaluation-setup transformation group, within seed-variance bounds. A
-   negative-control observable is included that is _not_ invariant.
-3. **Transfer.** Observable definitions and interpretations transfer across
-   at least two cooperative environments, even though numerical values are
-   environment-specific.
-4. **System-validation.** Component-level and pairwise observables track
+1. **Discrimination.** Which candidate observables distinguish configurations that
+   joint return cannot — reported per observable.
+2. **Invariance.** The measured invariance profile of each candidate across the named
+   transformation group, with seed-variance bands. The battery deliberately includes
+   observables expected _not_ to travel; reporting them is what keeps the
+   discrimination finding non-vacuous.
+3. **Transfer.** Whether observable definitions and interpretations carry across at
+   least two environments, even where numerical values are environment-specific.
+4. **System-validation.** Whether component-level and pairwise observables track
    system-level ones (correlation length, response-function curvature) under
-   controlled perturbation, validating their place in the canonical set.
+   controlled perturbation — the evidence for their role in the measured set.
 
-**Canonical observables (current candidates):**
+**Candidate observables (the battery):**
 
 - _O1: Conditional joint policy entropy._ H(a₁,…,a_N | s).
 - _O2: Normalized pairwise mutual information._ I(a_i; a_j | s), normalized.
@@ -164,15 +187,18 @@ The paper makes four falsifiable claims:
   perturbation of stress parameter σ; fragility index = ∂²R/∂σ² at operating
   point. Sign convention: negative = fragile, near zero = robust, positive =
   anti-fragile.
-- _O_neg (negative control): per-step reward variance._ Expected to fail T3.
+- _O_neg (illustrative non-traveler): per-step reward variance._ References reward, so
+  it cannot be setup-invariant; a sharper non-traveler would fail a _non-trivial_
+  transformation, not reward rescaling.
 
 **Evaluation-setup transformation group:**
 
 - _T1 (seed swap)_ — invariance expected, near-perfect.
 - _T2 (algorithm swap)_ — invariance partial; deviations themselves
   informative. Pair to be confirmed (see §6).
-- _T3 (reward rescaling)_ — invariance expected for O1–O3, violation
-  expected for O_neg.
+- _T3 (reward rescaling)_ — a near-trivial case (any action-only observable is
+  invariant, any reward-referencing one is not), so it carries little evidential
+  weight; included for completeness, not as a discriminating test.
 - _T4 (observation channel permutation)_ — invariance expected.
 - _T5 (minor environment reparameterization)_ — invariance _not_ expected;
   included to characterize the boundary of the invariance group.
@@ -183,8 +209,9 @@ construction: no privileged access to weights, training data, or internal
 representations required. Initial scope is observables-and-API; reference
 environments and analysis examples populate post-pilot.
 
-**Timeline:** 6 months. M1–M2 falsification phase; M3–M4 main empirical work;
-M4–M5 library v0.1 release; M5–M6 writeup and public framing post.
+**Timeline:** 6 months. M1–M2 pipeline + first sweeps on existing environments;
+M3–M4 the full characterization grid; M4–M5 library v0.1 + data release; M5–M6 writeup
+and public framing post.
 
 ## 5. Phasing beyond Year 1
 
@@ -220,10 +247,10 @@ in before pilot.
    secondary check. Both reported in paper 1.
 4. **Paper 1 scope.** Four claims across two environments × two algorithms
    in six months is ambitious. Considering whether a tighter scoping
-   would land harder; the pre-registration handles publishability of
-   partial results regardless.
-5. **Position paper (yes/no).** Companion to pre-registration; establishes
-   presence and anchors framing before paper 1 ships.
+   would land harder; because the deliverable is the map, partial results are
+   publishable regardless.
+5. **Position paper (yes/no).** Establishes presence and anchors framing before
+   paper 1 ships.
 6. **Library v0.1 scope.** Minimal (O1, O2, O_neg) at v0.1; add O3 in v0.2
    after dynamic-observable empirical work.
 7. **Co-author search.** Solo program at this ambition is a real risk.
@@ -327,18 +354,19 @@ audiences — a complement to the headline, not the foundation.
 
 ## 10. What success looks like at month 6 and month 12
 
-**Month 6:** Falsification-phase outcome resolved. Either the foundational
-invariance claims survive empirical pressure (proceed to writeup of full
-paper), or they don't (publish null-result paper, revise framework). Library
-v0.1 released with observables-and-API surface even if scope is minimal. At
-least one Layer 4 conversation with a standards-body methodology team
-produces actionable feedback.
+**Month 6:** First characterization map produced across the declared battery ×
+transformation grid on at least one environment — which observables travel, which
+discriminate, and where they trade off (including the ones that do neither). Library
+v0.1 + data released so the map is reproducible. At least one standards-body
+methodology conversation produces actionable feedback.
 
-**Month 12:** Paper 1 submitted to a MARL or ML venue (NeurIPS / ICML /
-TMLR). Library v0.2 released with O3 added. At least one named adoption
-commitment from an external research group. Paper 2 (phenomenology) underway.
+**Month 12:** Paper 1 submitted to a MARL or ML venue (NeurIPS / ICML / TMLR),
+reporting the full map across two environments. Library v0.2 + data released. At least
+one named external group re-using the library. Paper 2 (phenomenology of a specific
+observable) underway.
 
-The bar held throughout: transparent reporting of what the experiments show.
+The bar held throughout: the whole grid reported, profiles not verdicts, code and data
+shared.
 
 ## 11. Document map
 

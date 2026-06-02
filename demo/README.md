@@ -1,10 +1,13 @@
 # Demo: evaluation-invariance under reward rescaling
 
-A small, runnable instance of the program's central claim: some quantities
-describe a collective's **behavior** and are invariant under a change of
-evaluation setup, while others describe **reward outcomes** and are not. If we
-can identify and measure the first kind, cross-paper and cross-setup comparison
-becomes possible — which is what multi-agent evaluation currently lacks.
+A small, runnable smoke-test of the measurement machinery on the simplest,
+*provable* corner of the invariance question: under reward rescaling, quantities
+computed from a collective's **behavior** are invariant (the greedy policy is
+unchanged), while quantities describing **reward outcomes** are not. If observables
+of the first kind exist under *harder* setup changes too — algorithm, environment —
+cross-paper and cross-setup comparison becomes possible, which is what multi-agent
+evaluation currently lacks. That harder case is the program's real question; this demo
+only shows the pipeline works where the answer is already known.
 
 This is a smoke-test artifact, not a research result. It demonstrates the
 measurement machinery on the simplest cooperative substrate in the canon, and
