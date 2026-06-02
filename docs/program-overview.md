@@ -144,7 +144,7 @@ to fail gets designed to be easy to pass) more than rigor. The discipline here i
 - **Profiles, not verdicts.** Invariance and discrimination are reported as
   continuous quantities with seed-variance bands, not binary "is/isn't invariant"
   labels. Validity is not binary; "how invariant, under which transformations,
-  within what bounds" is the honest unit.
+  within what bounds" is the right unit.
 - **Reproducibility as the primary contribution.** Code, configs, environments, and
   the measured-observable library are released so the community can re-analyze,
   re-run, and build on the map — the open-science investment that compounds far more
