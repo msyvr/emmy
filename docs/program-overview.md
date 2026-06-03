@@ -4,13 +4,14 @@
 canonical reference for the program; other documents will be added to `docs/`.
 
 **Summary.** Emmy builds measurement foundations for multi-agent
-AI: a canonical set of evaluation-invariant observables for collective
-behavior, computed from action–observation streams without privileged model
-access. Two payoffs follow — cross-paper claims about coordination, robustness,
-and failure become comparable, and external evaluators gain an inspection layer
-for deployed agent collectives that single-model methods aren't equipped to provide.
-The set is multi-scale and includes dynamic response functions, so a collective's
-fragility under stress is a measured quantity. The orientation is drawn from
+AI: evaluation-invariant observables for collective behavior — quantities computed
+from action–observation streams, without privileged model access, designed to stay
+stable across changes in evaluation setup. Where such observables can be found, two
+payoffs follow — cross-paper claims about coordination, robustness, and failure become
+comparable, and external evaluators gain an inspection layer for deployed agent
+collectives that single-model methods aren't equipped to provide. The candidate
+observables are multi-scale and include dynamic response functions, so a collective's
+fragility under stress can be a measured quantity. The orientation is drawn from
 physics, systems biology, and statistical mechanics, and complements
 benchmark-based evaluation. This is pre-experiment work: the first deliverable is
 a paper plus open-source library — an open, reproducible characterization of which
@@ -28,7 +29,11 @@ have were built for other things: single-model evaluation and interpretability
 characterize one model at a time, and multi-agent results are dominated by joint
 return on benchmarks and ad-hoc behavioral indicators chosen per paper. None of
 these characterize what a collective does in a way that travels beyond the setup
-that produced it.
+that produced it. Even applied practice shows the same shape: Anthropic's engineering
+guide to evaluating AI agents is organized entirely around _single_ agents — coding,
+conversational, research, computer-use — and names multi-agent collaboration as a
+frontier its techniques will still need to adapt to ([Anthropic Engineering,
+2026](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)).
 
 Four consequences:
 
@@ -98,7 +103,7 @@ demonstrate (see §9), not assert.
 The framework rests on six commitments.
 
 1. **Multi-scale observables.** Component-level, pairwise, _and_ system-level
-   quantities in the canonical set from the start. Not reductionist. System-
+   quantities in the candidate battery from the start. Not reductionist. System-
    level observables (correlation length, integrated information, response
    functions) validate the component-level ones by their predictive
    relationship — not the other way around.
@@ -106,7 +111,7 @@ The framework rests on six commitments.
    set of evaluation-setup transformations under which it is invariant.
    Invariance is demonstrated empirically and, where tractable, analytically.
 3. **Dynamic observables as instrumentation.** Response functions and their
-   curvature (fragility / anti-fragility) are part of the canonical set from
+   curvature (fragility / anti-fragility) are part of the candidate battery from
    the start, defined as perturbation-response quantities. Perturbation
    protocols are how dynamic observables are _measured_, not a separate
    empirical program. Anti-fragility becomes a measurable curvature.
@@ -153,6 +158,15 @@ to fail gets designed to be easy to pass) more than rigor. The discipline here i
   map, an observable that fails to travel or discriminate is a reported data point,
   not a "failed" experiment — no pre-registration is needed to make null findings
   publishable.
+
+This is not a purely academic concern. Production eval practice hits the same wall from
+the other side: shared state across trials — leftover files, cached data, resource
+contention — produces _correlated_ failures that look independent, and the numbers
+become unreliable for measuring the system ([Anthropic Engineering,
+2026](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)). Harness
+hygiene handles that case; the observables here go one step further — when the
+correlation comes from the agents themselves sharing structure, it is treated as a
+quantity to measure, not only a confound to isolate.
 
 Pre-registration is held in reserve for a later, *specific* confirmatory claim — if
 and when the program makes one (e.g. "observable O is invariant under transformation
@@ -203,33 +217,34 @@ battery rather than asserted:
 - _T5 (minor environment reparameterization)_ — invariance _not_ expected;
   included to characterize the boundary of the invariance group.
 
-**Library v0.1.** Open-source Python library computing the canonical
+**Library v0.1.** Open-source Python library computing the candidate
 observables from action-observation streams. Audit-friendly architecture by
 construction: no privileged access to weights, training data, or internal
 representations required. Initial scope is observables-and-API; reference
 environments and analysis examples populate post-pilot.
 
-**Timeline:** 6 months. M1–M2 pipeline + first sweeps on existing environments;
-M3–M4 the full characterization grid; M4–M5 library v0.1 + data release; M5–M6 writeup
-and public framing post.
+**Plan.** Pipeline and first sweeps on existing environments, then the full
+characterization grid, then library v0.1 + data release, then the writeup and public
+framing post — sequenced so partial results are publishable at each step rather than
+gated on a single final deliverable.
 
-## 5. Phasing beyond Year 1
+## 5. Later directions
 
-- **Year 1 (months 7–12).** Paper 2: first phenomenology paper using the
-  observables. Likely target: characterization of intermittent adversarial
-  injection with response curves and fragility profiles as the primary
-  findings.
-- **Years 2–3.** Scaling laws (how do canonical observables scale with N,
-  bandwidth, compute, reward dimensionality), phase diagrams (where in
-  dimensionless-quantity space do collective behaviors qualitatively
-  change), perturbation taxonomy as a phenomenology of fragility profiles.
-- **Years 4–5.** Active-inference contrast (same observables on
+Beyond the first project, in roughly increasing order of ambition:
+
+- **Phenomenology.** A second paper applying the observables — likely a
+  characterization of intermittent adversarial injection, with response curves and
+  fragility profiles as the primary findings.
+- **Scaling laws and phase diagrams.** How the observables scale with N, bandwidth,
+  compute, and reward dimensionality; where in dimensionless-quantity space collective
+  behaviors qualitatively change; the perturbation taxonomy as a phenomenology of
+  fragility profiles.
+- **Comparative and applied.** Active-inference contrast (the same observables on
   multi-agent active-inference systems); diversity and collective robustness;
   real-world mapping conditions.
 
-The program is structured to deliver foundational results in Year 1 even if
-the multi-year program loses funding or scope. Year 1's paper + library is
-the load-bearing deliverable.
+The first project's paper + library is the load-bearing deliverable — it stands on its
+own if the broader program goes no further.
 
 ## 6. Open operational decisions
 
@@ -245,8 +260,8 @@ in before pilot.
    scoped to cooperative-only and the transfer claim is tested in a follow-on.
 3. **R(σ) commitment.** Time-to-recovery as primary; joint return as
    secondary check. Both reported in paper 1.
-4. **Paper 1 scope.** Four claims across two environments × two algorithms
-   in six months is ambitious. Considering whether a tighter scoping
+4. **Paper 1 scope.** Four claims across two environments × two algorithms is
+   ambitious for a first project. Considering whether a tighter scoping
    would land harder; because the deliverable is the map, partial results are
    publishable regardless.
 5. **Position paper (yes/no).** Establishes presence and anchors framing before
@@ -254,7 +269,7 @@ in before pilot.
 6. **Library v0.1 scope.** Minimal (O1, O2, O_neg) at v0.1; add O3 in v0.2
    after dynamic-observable empirical work.
 7. **Co-author search.** Solo program at this ambition is a real risk.
-   A MARL-credible co-author in Year 1 would significantly de-risk both
+   A MARL-credible co-author early would significantly de-risk both
    technical work and adoption.
 
 ## 7. Landscape position
@@ -352,15 +367,15 @@ guarantee: where the signatures exist, the indicators apply; where they don't, t
 boundary is itself a finding. This is the natural bridge for catastrophic-risk-focused
 audiences — a complement to the headline, not the foundation.
 
-## 10. What success looks like at month 6 and month 12
+## 10. What success looks like
 
-**Month 6:** First characterization map produced across the declared battery ×
+**First milestone:** First characterization map produced across the declared battery ×
 transformation grid on at least one environment — which observables travel, which
 discriminate, and where they trade off (including the ones that do neither). Library
 v0.1 + data released so the map is reproducible. At least one standards-body
 methodology conversation produces actionable feedback.
 
-**Month 12:** Paper 1 submitted to a MARL or ML venue (NeurIPS / ICML / TMLR),
+**Next:** Paper 1 submitted to a MARL or ML venue (NeurIPS / ICML / TMLR),
 reporting the full map across two environments. Library v0.2 + data released. At least
 one named external group re-using the library. Paper 2 (phenomenology of a specific
 observable) underway.

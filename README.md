@@ -40,7 +40,7 @@ In its simplest form, the hypothesis is that the right unit of
 measurement is the _observable_ — a quantity computed from what the
 agents do, their actions and observations, defined so that it does not
 change when you rescale rewards or relabel a setup. A standard
-set of such observables yields two useful outcomes: 1. Claims about
+set of such observables would yield two useful outcomes: 1. Claims about
 coordination, robustness, and failure become comparable across papers. 2.
 An external evaluator gains a way to inspect a deployed group of agents
 directly — the inspection layer that single-model methods aren't equipped
@@ -51,10 +51,10 @@ privileged access to the underlying models, and the same instruments
 apply whether the agents are reinforcement-learning policies,
 language-model ensembles, or active-inference systems.
 
-The first deliverable is a paper and an open-source library: a small,
-canonical set of these observables for cooperative multi-agent
-collectives, with pre-registered, falsifiable claims and a published
-null-result protocol.
+The first deliverable is a paper and an open-source library: an open, reproducible
+characterization of which of these observables actually travel across evaluation setups
+and which discriminate behaviors that joint return can't — the measured map, reported in
+full (including the observables that do neither), rather than a set asserted in advance.
 
 A couple of notes: First, this is pre-experiment work — these claims are
 not yet validated. Second, the framework measures behavior, not internal
