@@ -59,8 +59,8 @@ Four consequences:
   high-stakes autonomous work — and once humans leave the loop, external measurement is the
   oversight handle that remains.
 
-The gap is foundational, and closing it starts with finding out which of the field's
-collective metrics travel across setups — and which are setup artifacts.
+The gap is in the measurement layer, and closing it starts with finding out which of the
+field's collective metrics travel across setups — and which are setup artifacts.
 
 ## 2. Thesis
 
@@ -88,6 +88,12 @@ that the field's collective metrics are setup-bound, and by how much — is itse
 worth publishing and a direct warning to anyone comparing collective metrics across
 deployments.
 
+This is the **setup-invariance** axis — whether a metric travels across deployments. A
+companion concern runs on the **time** axis: behavior drifts as a system keeps learning, so
+evaluation can no longer assume a frozen artefact (Pacchiardi, Hernández-Orallo et al.,
+_Continual Learning Requires Evaluating Trajectories_, 2026). The two are composable — a
+collective of continually-learning agents breaks both.
+
 **The stance is measurement-first.** Most multi-agent and safety work starts from a
 human-meaningful concept — cooperation, deception, empowerment, power-seeking — and looks
 for a proxy that captures it in some environment. This program inverts that: it starts from
@@ -97,7 +103,7 @@ characterized, not settled by naming. The move is the discipline evolutionary bi
 brought to traits once assumed adaptive (Gould & Lewontin's "spandrels," 1979): build the
 controlled alternative and measure, rather than read function into what you observe. The
 approach's payoff depends on the bridge from measured metrics to safety-relevant behavior
-being real, which the program treats as something to demonstrate (see §9), not assert.
+being real, which the program treats as something to demonstrate (see §8), not assert.
 
 The approach rests on a few commitments.
 
@@ -188,9 +194,9 @@ literature scan, final selection pending a reimplementability pass:
   agent shows up in the collective's behavior (motivated by Anthropic's _AI Organizations_
   finding that collectives can be less aligned than their members).
 
-The battery stays at 3–4 metrics actually reimplemented and run, not a long list
-name-checked. A deep, calibrated characterization of four says more than a shallow sweep
-over ten. The reimplementability pass doubles as a citation-verification pass.
+The battery stays at 3–4 metrics actually reimplemented and run: a deep, calibrated
+characterization of four says more than a shallow sweep over ten. The reimplementability
+pass doubles as a citation-verification pass.
 
 **Optional battery member — a dynamic response observable.** A time-to-recovery of a
 collective order parameter after a defined perturbation pulse — a dynamic susceptibility the
@@ -221,7 +227,7 @@ emmy's target users (auditors, operators) work, so invariance is characterized h
 directly. Team size N = 3–5; open-weight backbones first (one lead family plus a second for
 the cross-backbone axis) plus one frontier/API model for a capability-tier transfer check;
 short, multi-step collaborative tasks with a clear collective-behavior surface, on existing
-harnesses where possible. Building the substrate is not the contribution.
+harnesses where possible.
 
 **The calibration ladder.** Analytic phantom (known ground truth, near-zero compute) →
 [optional] semi-controllable MARL bridge (coupling and N directly settable; thousands of
@@ -271,44 +277,7 @@ behavior that joint task-performance cannot already separate. A solo program at 
 carries real risk; a collaborator with LLM-agent-evaluation experience would help both the
 technical work and its adoption.
 
-## 7. Landscape position
-
-**The battery metrics themselves are the closest prior art — and emmy's relationship to
-them is "item under test," not "competitor."** Each defines a collective-level metric on a
-single setup; emmy characterizes their cross-setup comparability. The recently published
-fragility/antifragility, misalignment-propensity, and multi-agent-evaluation measures are
-single-setup by construction with no invariance test — exactly the open lane.
-
-**Adjacent work and where the gap remains:**
-
-- _Continual-evaluation position work_ (Pacchiardi, Hernández-Orallo et al., _Continual
-  Learning Requires Evaluating Trajectories_, 2026) argues current evaluation wrongly assumes
-  a frozen artefact and that behavioral-invariance assumptions are eroding. Complementary, not
-  competing: they attack the **temporal** invariance axis (behavior drifts as a system keeps
-  learning); emmy attacks the **setup** invariance axis (does a metric travel across
-  deployments?). Orthogonal and composable; emmy's distinct contribution is the estimation
-  rigor — noise floor, phantom calibration — their position paper leaves open, applied to
-  collectives. Construct validity and the capabilities/propensities distinction are shared
-  primitives, which makes this a framing cite rather than prior art to differentiate from.
-- _MARL evaluation protocols_ (Gorsane et al., _Standardised Evaluation Protocol for
-  Cooperative MARL_, NeurIPS 2022) are the methodological ancestor: they standardize how to
-  report _scalar return_. Emmy ports variance-aware evaluation to _structured collective
-  metrics_ and adds a calibration phantom, an estimator-noise floor, and a cross-setup
-  invariance axis those protocols don't carry.
-- _Precision-aware RL reporting_ (Agarwal et al., _Deep RL at the Edge of the Statistical
-  Precipice_, NeurIPS 2021; `rliable`) makes scalar scores variance-aware across few seeds.
-  Emmy ports that discipline to non-scalar collective metrics, the re-sample floor playing
-  rliable's interval-estimate role.
-- _Information-theoretic structure_ (Williams & Beer PID; Lizier transfer entropy; Rosas et
-  al. O-information, 2019) supplies candidate descriptors and tools for the interaction-graph
-  and contagion metrics. Emmy treats estimability as a first-class gate — these enter only
-  behind the Stage-0 phantom; where not estimable at this N and sample budget, that is
-  reported, not papered over.
-- _Standards bodies_ — NIST AI RMF, NIST CAISI, AISI-UK, CEN-CENELEC JTC 21 — are
-  explicitly looking for measurement primitives; none yet exist in mature form for
-  multi-agent systems.
-
-## 8. Governance and standards relevance
+## 7. Governance and standards relevance
 
 Audit-friendly architecture is a founding design constraint. The library computes metrics
 from action–observation streams with no privileged-access requirement; this matches the
@@ -325,20 +294,20 @@ Where the metrics touch policy:
 Relevant standards efforts: AISI-UK methodology team, NIST CAISI, CEN-CENELEC JTC 21,
 Cooperative AI Foundation, OECD AI standards working groups.
 
-## 9. AI safety relevance
+## 8. AI safety relevance
 
 The program's safety relevance is downstream option value — a precondition for other safety
-work, not a bet on where risk will concentrate.
+work that holds whatever the risk picture turns out to be.
 
 **The inspection gap (the headline).** Powerful models from many developers are increasingly
 composed into _collectives_ by agent frameworks: multiple model-agents acting on a shared
 task or environment. AI-control and single-model evaluation assess the trustworthiness of
 _individual_ models; they do not characterize the collective's emergent behavior, and no
-external inspection layer for it exists. That surface is already a demonstrated concern, not
-a thought experiment: Anthropic's alignment team finds that multi-agent _AI organizations_
+external inspection layer for it exists. That surface is already a demonstrated concern: Anthropic's alignment team finds that
+multi-agent _AI organizations_
 can be more effective but _less aligned_ than the individual agents composing them, and
-argues such systems need testing for misalignment across organizational structures — exactly
-the measurement no single-model check provides
+argues such systems need testing for misalignment across organizational structures — the
+measurement no single-model check provides
 ([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)).
 
 **Why a comparability instrument is the precondition.** Today a collective-(mis)alignment
@@ -346,15 +315,13 @@ metric reported by a vendor on its own setup cannot be trusted by an external au
 _different_ deployment — there is no evidence the number travels. Emmy's map says, per metric,
 whether it travels, and on the no-privileged-access surface a third party actually has. That
 is the external-inspection layer AI-control (white-box, owner-side) does not provide, and the
-precondition for ever comparing one collective to another. It complements AI-control rather
-than competing with it: control protocols increasingly involve multiple agents (e.g.
-untrusted monitors), but they evaluate the trust relationship, not the collective dynamics
-those protocols run inside.
+precondition for ever comparing one collective to another. AI-control evaluates the trust relationship between agents — including where its protocols
+involve multiple agents, e.g. untrusted monitors. The collective dynamics those protocols run
+inside are what it does not characterize, and what emmy measures.
 
 **Falsifiable, composable claims.** Robustness, alignment, and emergent-failure-mode claims
 about multi-agent systems are uninterpretable without measurement that travels across testing
-setups; with it, they become comparable across labs and falsifiable. This value does not
-depend on any particular theory of where multi-agent risk concentrates.
+setups; with it, they become comparable across labs and falsifiable.
 
 **Early warning — a hypothesis held in reserve.** Whether multi-agent collapses carry the
 slow-precursor signatures (rising autocorrelation, variance, recovery time) that precede
@@ -363,7 +330,7 @@ failures may be discrete or adversarial, with no slow precursor. It is a complem
 headline for catastrophic-risk-focused audiences, pursued only if a planted construct sweep
 produces a qualitative transition, and not part of the first paper.
 
-## 10. What a result looks like
+## 9. What a result looks like
 
 The phantom calibration comes first: every metric's estimator checked against known ground
 truth, with a trueness bound and a noise floor under it, at near-zero compute. On that
@@ -375,7 +342,7 @@ null is equally citable: the field's collective metrics are setup-bound, and her
 Either way the whole grid is reported — profiles rather than verdicts — with code and data
 released so the map is reproducible.
 
-## 11. Document map
+## 10. Document map
 
 This is currently the only public document in `docs/`. Additional documentation will be
 added as it is finalized for public release.
