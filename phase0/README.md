@@ -31,7 +31,10 @@ sample, which is where bias bites.
 **~0.001 bits** across the range; it roughly halves the plug-in's small-N
 over-coordination bias (0.071 vs 0.152 bits at `N=100`); the **noise floor is
 0.025 bits at `N=10,000`** (0.29 at `N=100`).
-Run: `uv run python phase0/calibrate.py` · figure: `results/calibration.png`.
+
+![Coordination-metric calibration: trueness across coupling strength, and bias (plug-in vs Miller-Madow) plus the noise floor vs sample size](results/calibration.png)
+
+Run: `uv run python phase0/calibrate.py`.
 
 ## Fragility / antifragility — response curvature
 
@@ -46,8 +49,10 @@ callable**.
 range. The **floor falls from 0.69 (budget 9) to 0.066 (budget 900)**, so a
 `|kappa| = 1` fragility resolves by ~budget 27, while `|kappa| = 0.5` needs
 ~budget 270+.
-Run: `uv run python phase0/calibrate_fragility.py` · figure:
-`results/fragility_calibration.png`.
+
+![Fragility calibration: trueness and sign resolution across the fragility range, and the noise floor vs rollout budget](results/fragility_calibration.png)
+
+Run: `uv run python phase0/calibrate_fragility.py`.
 
 ## Misalignment-propagation — contagion coefficient
 
@@ -62,8 +67,10 @@ detection threshold** — when faint contagion is resolvable from none.
 The **floor falls from 0.185 (budget 100) to 0.018 (budget 10,000)**, so a faint
 contagion (`beta = 0.2`) is resolvable from zero by ~budget 300–1,000 — the
 dose-sweep budget needed to claim a planted misalignment spread.
-Run: `uv run python phase0/calibrate_propagation.py` · figure:
-`results/propagation_calibration.png`.
+
+![Misalignment-propagation calibration: trueness across propagation strength, and the noise floor vs dose-sweep budget](results/propagation_calibration.png)
+
+Run: `uv run python phase0/calibrate_propagation.py`.
 
 ## Scope
 
