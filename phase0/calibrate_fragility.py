@@ -124,19 +124,24 @@ def plot(records: list[dict], path: Path) -> None:
     ax_true.set_xlim(-lim, lim)
     ax_true.legend(loc="best", fontsize=9)
 
-    budgets = [r["budget"] for r in at_kappa]
-    ax_floor.plot(budgets, [r["floor"] for r in at_kappa], "^--", color="#777777",
-                  label="noise floor (95% half-width)")
-    ax_floor.plot(budgets, [abs(r["bias"]) for r in at_kappa], "s-", color="#1f77b4",
-                  label="|bias|")
+    # Floor vs budget against the ideal 1/sqrt rate; the signal line shows where a
+    # fragility of this size sits, so the sign is callable where the floor dips below it.
+    # (Bias is near zero -- shown in the trueness panel and the CSV -- so it is not
+    # plotted here, where on a log axis it would only trace Monte-Carlo scatter.)
+    budgets = np.array([r["budget"] for r in at_kappa])
+    floors = np.array([r["floor"] for r in at_kappa])
+    ax_floor.plot(budgets, floors, "^--", color="#777777", label="noise floor (95% half-width)")
+    ax_floor.plot(budgets, floors[0] * np.sqrt(budgets[0] / budgets), ":", color="#bbbbbb",
+                  lw=1.5, label="ideal  1 / sqrt(budget)")
     ax_floor.axhline(abs(REPORT_KAPPA), color="#d62728", lw=1.2, ls=":",
                      label=f"|kappa| = {abs(REPORT_KAPPA)} (signal)")
     ax_floor.set_xscale("log")
     ax_floor.set_yscale("log")
     ax_floor.set_xlabel("rollout budget  (stress levels x replicates)")
     ax_floor.set_ylabel("curvature units")
-    ax_floor.set_title(f"Floor vs budget: when the sign becomes callable\n(kappa = {REPORT_KAPPA})")
-    ax_floor.legend(loc="best", fontsize=9)
+    ax_floor.set_title(f"Noise floor vs rollout budget  (kappa = {REPORT_KAPPA})"
+                       "\nfloor tracks 1/sqrt(budget); sign callable where it dips below |kappa|")
+    ax_floor.legend(loc="best", fontsize=8)
 
     fig.suptitle(
         "Phase 0 calibration -- fragility (response-curvature) metric on an analytic phantom\n"

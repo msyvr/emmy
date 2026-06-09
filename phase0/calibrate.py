@@ -130,20 +130,25 @@ def plot(records: list[dict], path: Path) -> None:
     ax_true.set_ylim(-0.05, lim)
     ax_true.legend(loc="best", fontsize=9)
 
-    # Right: bias vs sample size, plug-in vs corrected, with the floor.
-    ns = [r["n"] for r in at_kappa]
+    # Right: bias (plug-in vs corrected) and the floor vs N, against the ideal rate.
+    # Miller-Madow bias is plotted as markers, not a line -- it is near zero, so a
+    # line would only trace Monte-Carlo scatter on the log axis.
+    ns = np.array([r["n"] for r in at_kappa])
+    floors = np.array([r["floor"] for r in at_kappa])
     ax_bias.plot(ns, [abs(r["plugin_bias"]) for r in at_kappa], "o-", color="#d62728",
                  label="|bias|  plug-in")
-    ax_bias.plot(ns, [abs(r["mm_bias"]) for r in at_kappa], "s-", color="#1f77b4",
+    ax_bias.plot(ns, [abs(r["mm_bias"]) for r in at_kappa], "s", color="#1f77b4", ms=6,
                  label="|bias|  Miller-Madow")
-    ax_bias.plot(ns, [r["floor"] for r in at_kappa], "^--", color="#777777",
-                 label="noise floor (95% half-width)")
+    ax_bias.plot(ns, floors, "^--", color="#777777", label="noise floor (95% half-width)")
+    ax_bias.plot(ns, floors[0] * np.sqrt(ns[0] / ns), ":", color="#bbbbbb", lw=1.5,
+                 label="ideal  1 / sqrt(N)")
     ax_bias.set_xscale("log")
     ax_bias.set_yscale("log")
     ax_bias.set_xlabel("sample size  N")
     ax_bias.set_ylabel("bits")
-    ax_bias.set_title(f"Bias and noise floor vs sample size\n(kappa = {REPORT_KAPPA})")
-    ax_bias.legend(loc="best", fontsize=9)
+    ax_bias.set_title("Bias and noise floor vs N  "
+                      f"(kappa = {REPORT_KAPPA})\nMiller-Madow removes most of the plug-in bias; floor tracks 1/sqrt(N)")
+    ax_bias.legend(loc="best", fontsize=8)
 
     fig.suptitle(
         "Phase 0 calibration -- conditional-MI coordination metric on an analytic phantom\n"

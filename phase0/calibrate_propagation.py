@@ -120,19 +120,24 @@ def plot(records: list[dict], path: Path) -> None:
     ax_true.set_ylim(-0.05, lim)
     ax_true.legend(loc="best", fontsize=9)
 
-    budgets = [r["budget"] for r in at_beta]
-    ax_floor.plot(budgets, [r["floor"] for r in at_beta], "^--", color="#777777",
-                  label="noise floor (95% half-width)")
-    ax_floor.plot(budgets, [abs(r["bias"]) for r in at_beta], "s-", color="#1f77b4",
-                  label="|bias|")
+    # Floor vs budget against the ideal 1/sqrt rate; the signal line shows where a
+    # contagion of this size sits, so it is detectable where the floor dips below it.
+    # (Bias is near zero -- shown in the trueness panel and the CSV -- so it is not
+    # plotted here, where on a log axis it would only trace Monte-Carlo scatter.)
+    budgets = np.array([r["budget"] for r in at_beta])
+    floors = np.array([r["floor"] for r in at_beta])
+    ax_floor.plot(budgets, floors, "^--", color="#777777", label="noise floor (95% half-width)")
+    ax_floor.plot(budgets, floors[0] * np.sqrt(budgets[0] / budgets), ":", color="#bbbbbb",
+                  lw=1.5, label="ideal  1 / sqrt(budget)")
     ax_floor.axhline(REPORT_BETA, color="#d62728", lw=1.2, ls=":",
                      label=f"beta = {REPORT_BETA} (signal)")
     ax_floor.set_xscale("log")
     ax_floor.set_yscale("log")
     ax_floor.set_xlabel("dose-sweep budget  (doses x targets x replicates)")
     ax_floor.set_ylabel("propagation units")
-    ax_floor.set_title(f"Floor vs budget: when faint contagion is detectable\n(beta = {REPORT_BETA})")
-    ax_floor.legend(loc="best", fontsize=9)
+    ax_floor.set_title(f"Noise floor vs dose-sweep budget  (beta = {REPORT_BETA})"
+                       "\nfloor tracks 1/sqrt(budget); detectable where it dips below beta")
+    ax_floor.legend(loc="best", fontsize=8)
 
     fig.suptitle(
         "Phase 0 calibration -- misalignment-propagation (contagion) metric on an analytic phantom\n"

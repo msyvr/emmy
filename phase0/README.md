@@ -19,6 +19,19 @@ All three battery metrics are calibrated here.
   result; with the floor printed, a later "this metric doesn't travel" cannot be
   confused with "we estimated it badly".
 
+## Reading the figures
+
+Each metric gets two panels.
+
+- **Left — trueness.** The estimate vs the known value across the metric's range.
+  Points on the dashed identity line, within their error bars (the 95% noise floor),
+  mean the estimator is unbiased.
+- **Right — precision.** The noise floor vs sample size / budget, log-log. A
+  statistically efficient estimator's floor falls as **1/√N** (the dotted reference
+  line); the floor at a given budget is the smallest effect that budget can resolve, so
+  to detect an effect of size X you need the budget where the floor drops below X. Bias,
+  where shown, sits far below the floor — it is reported in the left panel and the CSV.
+
 ## Coordination — conditional mutual information `I(a1; a2 | s)`
 
 High when two agents coordinate within a context `s`, zero when independent. The
