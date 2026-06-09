@@ -3,10 +3,10 @@
 Evaluation-invariant measurement for multi-agent AI systems.
 
 **Status:** Pre-experiment. The
-[program overview](docs/program-overview.md) is the current canonical
-reference; additional documents will be added to `docs/` as they are
-finalized for public release. A small runnable demonstration of the core
-idea is in [`demo/`](demo/).
+[program overview](docs/program-overview.md) is the canonical reference.
+Concrete work so far: the Phase 0 estimator calibrations in
+[`phase0/`](phase0/), and a smoke-test of the invariance idea in
+[`demo/`](demo/).
 
 ## The gap
 
@@ -18,57 +18,79 @@ into real-world deployment.
 We have little settled practice for measuring what such a group does
 collectively. The closest tools look elsewhere: single-model methods —
 evaluation, interpretability, AI control — inspect one model at a time,
-and reveal little about the behavior of the group. Multi-agent results,
-where reported, are expressed in terms tied to one setup — a score that
-depends on a particular environment's payoffs, a behavioral signal
-defined for a single experiment. Those numbers rarely carry from one
-paper to the next, or from a lab setup to a deployment. And the reporting
-conventions that downstream safety and evaluation work will inherit are
-taking root now — before the measurement practice supporting them is
-sound.
+and reveal little about the behavior of the group. The field is starting
+to publish collective metrics, but each is reported on one setup — a score
+tied to a particular environment, a signal defined for a single experiment —
+and whether those numbers survive a change of setup is not tested, so they
+rarely carry from one paper to the next, or from a lab setup to a
+deployment. And the reporting conventions that downstream safety and
+evaluation work will inherit are taking root now — before the measurement
+practice supporting them is sound.
 
-## The bridge
+## The approach
 
 Emmy is a research program building the measurement foundations for
-groups of AI agents. Its approach is atypical: instead of starting from
-an anthropomorphized characterization of what the agents are doing —
-cooperating, competing, deceiving — and building a proxy metric around
-those behaviors, Emmy starts from measurable quantities and asks what
-those reveal about safety and alignment.
+groups of AI agents. Its approach is atypical: instead of starting from an
+anthropomorphized characterization of what the agents are doing —
+cooperating, competing, deceiving — and building a proxy metric around it,
+emmy starts from quantities measurable from behavior and asks what they
+reveal about safety and alignment.
 
-In its simplest form, the hypothesis is that the right unit of
-measurement is the _observable_ — a quantity computed from what the
-agents do, their actions and observations, defined so that it does not
-change when you rescale rewards or relabel a setup. A standard
-set of such observables would yield two useful outcomes: 1. Claims about
-coordination, robustness, and failure become comparable across papers. 2.
-An external evaluator gains a way to inspect a deployed group of agents
-directly — the inspection layer that single-model methods aren't equipped
-to provide.
+The field is now publishing collective-behavior metrics for LLM-agent
+systems — fragility/antifragility, misalignment propensity, multi-agent
+evaluation suites, interaction-graph measures. Emmy takes that battery of
+published metrics and characterizes, for each, two things: how much it
+**travels** across setup changes that should not move a genuine collective
+property (invariance), and whether it tracks a collective property that
+joint task-performance cannot separate (construct validity). Where a metric
+holds on both, two payoffs follow: claims about coordination, robustness,
+and failure become comparable across papers, and an external evaluator
+gains a way to inspect a deployed group directly — the inspection layer
+single-model methods aren't equipped to provide.
 
-Because the measurement depends only on behavior, it requires no
-privileged access to the underlying models, and the same instruments
-apply whether the agents are reinforcement-learning policies,
-language-model ensembles, or active-inference systems.
+The measurement depends only on agents' actions and observations, so it
+needs no privileged access to the underlying models — the surface a
+third-party evaluator actually has. And every metric is calibrated first
+against synthetic systems with known ground truth, so a printed
+estimator-noise floor makes each result interpretable rather than an
+artifact of estimation.
 
-The first deliverable is a paper and an open-source library: an open, reproducible
-characterization of which of these observables actually travel across evaluation setups
-and which discriminate behaviors that joint return can't — the measured map, reported in
-full (including the observables that do neither), rather than a set asserted in advance.
-
-A couple of notes: First, this is pre-experiment work — these claims are
-not yet validated. Second, the framework measures behavior, not internal
-cognition — making it complementary to benchmark evaluation and
+This is pre-experiment work; the claims are not yet validated. It builds on
+metrics the field has already published, and it measures behavior rather
+than internal cognition — complementary to benchmark evaluation and
 interpretability.
 
-## Demo: invariance under reward rescaling
+## Phase 0 — estimator calibration
 
-[`demo/`](demo/) contains a small, runnable smoke-test of the measurement machinery on the simplest, provable case — reward rescaling, where behavioral invariance follows from policy-invariance:
-two tabular Q-learning agents in the iterated prisoner's dilemma, showing
-that behavioral observables (coordination, action autocorrelation) are
-invariant under reward rescaling while reward-based quantities are not.
-It is a smoke-test of the measurement machinery, not a research result.
-See [`demo/README.md`](demo/README.md).
+Before any of these metrics is run on real LLM-agent rollouts, its estimator
+is calibrated against a synthetic source whose value is known in closed
+form — measuring estimator bias and the sampling noise floor directly, at
+~zero compute. [`phase0/`](phase0/) calibrates all three battery metrics:
+
+- **coordination** (conditional mutual information) — recovers the known
+  value to ~0.001 bits at N=10,000, with the noise floor printed (0.025 bits);
+- **fragility / antifragility** (response curvature) — recovers the sign and
+  magnitude; the floor sets the budget at which fragile-vs-antifragile is callable;
+- **misalignment-propagation** (contagion) — recovers the coefficient; the
+  floor sets the budget at which faint contagion is detectable from zero.
+
+Each result is the estimator's resolution limit — the floor under which a
+later "this metric does or does not travel across setups" finding is
+interpretable rather than an estimation artifact. The next phase runs these
+calibrated estimators on small LLM-agent teams (the invariance sweep). See
+[`phase0/README.md`](phase0/README.md).
+
+## Demo — invariance under reward rescaling
+
+[`demo/`](demo/) is a small, runnable smoke-test of the measurement
+machinery on the simplest, provable case — reward rescaling, where
+behavioral invariance follows from policy-invariance: two tabular Q-learning
+agents in the iterated prisoner's dilemma, showing that behavioral
+observables (coordination, action autocorrelation) are invariant under
+reward rescaling while reward-based quantities are not. It illustrates the
+invariance question on the one corner where the answer is provable — a
+smoke-test of the machinery, not a research result. See
+[`demo/README.md`](demo/README.md).
 
 ## Emmy Noether
 
