@@ -66,8 +66,9 @@ field's collective metrics travel across setups — and which are setup artifact
 
 The program's first project is empirical and diagnostic. It does not assume a canonical
 set of evaluation-invariant metrics exists; it takes the metrics the field is already
-publishing and asks which of them earn cross-setup trust. For each metric in the battery,
-it characterizes two properties jointly:
+publishing and asks which of them earn cross-setup trust — which is to say, which track a
+property of the collective itself rather than of the setup it was measured in. For each metric
+in the battery, it characterizes two properties jointly:
 
 - **Invariance** — how much the metric moves under a change of setup. Some changes should
   not move a genuine collective property (decoding stochasticity, prompt paraphrase,
@@ -104,6 +105,15 @@ brought to traits once assumed adaptive (Gould & Lewontin's "spandrels," 1979): 
 controlled alternative and measure, rather than read function into what you observe. The
 approach's payoff depends on the bridge from measured metrics to safety-relevant behavior
 being real, which the program treats as something to demonstrate (see §8), not assert.
+
+**The scope of the claim.** What a positive result identifies is a behavioral _disposition_ —
+the group's stable input→behavior structure — not its latent intent. This is a principled limit
+of behavioral evaluation (Santos-Grueiro, _Normative Indistinguishability under Behavioral
+Evaluation_, 2026): finite behavioral evidence pins down an equivalence class of collectives
+consistent with the observed streams, not a unique internal state — which is exactly why the
+invariance class has to be specified, and why the metrics are reported as profiles, not verdicts.
+The bound tightens further when agents optimize against the measurement; that adversarial regime
+is where internals-based methods take over, and is out of scope here.
 
 The approach rests on a few commitments.
 

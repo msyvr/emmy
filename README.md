@@ -42,7 +42,9 @@ evaluation suites, interaction-graph measures. Emmy takes that battery of
 published metrics and characterizes, for each, two things: how much it
 **travels** across setup changes that should not move a genuine collective
 property (invariance), and whether it tracks a collective property that
-joint task-performance cannot separate (construct validity). Where a metric
+joint task-performance cannot separate (construct validity). Underneath, these
+are one question: does the metric track something that belongs to the group
+itself, rather than the particular setup it was run in? Where a metric
 holds on both, two payoffs follow: claims about coordination, robustness,
 and failure become comparable across papers, and an external evaluator
 gains a way to inspect a deployed group directly — the inspection layer
@@ -55,9 +57,12 @@ against synthetic systems with known ground truth, so a printed
 estimator-noise floor makes each result interpretable rather than an
 artifact of estimation.
 
-This is pre-experiment work; the claims are not yet validated. It builds on
-metrics the field has already published, and it measures behavior rather
-than internal cognition — complementary to benchmark evaluation and
+This is pre-experiment work; the claims are not yet validated. It measures
+behavior rather than internal cognition, so what a positive identifies is a
+behavioral disposition — a property of the group, not its latent intent (a
+principled limit of behavioral evaluation, and one that weakens further against
+agents optimizing to fool the measurement). It builds on metrics the field has
+already published, and is complementary to benchmark evaluation and
 interpretability.
 
 ## Phase 0 — estimator calibration
