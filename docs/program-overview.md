@@ -312,13 +312,13 @@ work that holds whatever the risk picture turns out to be.
 **The inspection gap (the headline).** Powerful models from many developers are increasingly
 composed into _collectives_ by agent frameworks: multiple model-agents acting on a shared
 task or environment. AI-control and single-model evaluation assess the trustworthiness of
-_individual_ models; they do not characterize the collective's emergent behavior, and no
+_individual_ models; they do not characterize the collective's emergent behavior — the group-level behavior its individual-model checks don't predict — and no
 external inspection layer for it exists. That surface is already a demonstrated concern: Anthropic's alignment team finds that
 multi-agent _AI organizations_
 can be more effective but _less aligned_ than the individual agents composing them, and
 argues such systems need testing for misalignment across organizational structures — the
 measurement no single-model check provides
-([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)).
+([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)). The Cooperative AI Foundation's _Multi-Agent Risks from Advanced AI_ ([Hammond et al., 2025](https://arxiv.org/abs/2502.14143)) catalogues the failure modes — miscoordination, conflict, collusion — that such an inspection layer would need to measure.
 
 **Why a comparability instrument is the precondition.** Today a collective-(mis)alignment
 metric reported by a vendor on its own setup cannot be trusted by an external auditor on a
