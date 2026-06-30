@@ -7,7 +7,7 @@ here the ground truth is constructed, so estimator **bias** and the sampling
 **noise floor** are measured directly. This is the de-risk gate the rest of the
 program runs behind, at ~zero compute.
 
-All three battery metrics are calibrated here.
+All three battery metrics are calibrated here; the coordination metric additionally gets a discriminant-validity calibration (does it reject a common cause?).
 
 ## What each calibration reports
 
@@ -48,6 +48,33 @@ over-coordination bias (0.071 vs 0.152 bits at `N=100`); the **noise floor is
 ![Coordination-metric calibration: trueness across coupling strength, and bias (plug-in vs Miller-Madow) plus the noise floor vs sample size](results/calibration.png)
 
 Run: `uv run python phase0/calibrate.py`.
+
+## Coordination — discriminant validity (rejecting a common cause)
+
+Recovering a known coupling (above) is *sensitivity*. The coordination metric is
+*conditional* MI for a reason — it is meant to strip out a common cause, two agents
+that look coupled only because a shared context drives both — and that, the metric's
+reason for being, needs its own calibration. The phantom (`confound_source.py`) adds a
+second knob: `kappa_cc` sets a shared per-context marginal that biases both agents (a
+common cause, no direct link), independent of the genuine coupling `kappa_link`. At
+`kappa_cc = 0` it reduces exactly to `coupled_source`.
+
+**Result:** under a pure common cause (`kappa_link = 0`), plain MI climbs to **0.64 bits**
+as `kappa_cc → 0.9` while conditional MI stays at **0.000 bits** within its ±0.001 floor —
+the metric does not mistake a shared cause for coordination. With that common cause present
+(`kappa_cc = 0.6`), conditional MI still tracks a genuine link near-unbiased (0.13 → 1.03
+bits as `kappa_link → 0.9`). So the metric is **sensitivity + specificity**: it fires on
+genuine coupling and not on a shared-cause look-alike.
+
+![Discriminant validity: under a pure common cause plain MI is fooled while conditional MI stays at the floor (left); conditional MI still tracks a genuine link with the common cause present (right)](results/confound_calibration.png)
+
+This is the calibration the **agent-specific confounds** turn on: two agents on the same
+base model, or sharing a system prompt or context, behave alike without exchanging
+influence. Those confounds are *observable* to an auditor, so they are conditionable —
+exactly the case this phantom validates. A *latent* (unobserved) common cause remains the
+honest limit of any behavior-only measure.
+
+Run: `uv run python phase0/calibrate_confound.py`.
 
 ## Fragility / antifragility — response curvature
 
@@ -98,10 +125,12 @@ metric's floor, established here, printed under the result.
 
 ```bash
 uv run python phase0/calibrate.py             # coordination
+uv run python phase0/calibrate_confound.py    # coordination: discriminant validity
 uv run python phase0/calibrate_fragility.py   # fragility
 uv run python phase0/calibrate_propagation.py # misalignment-propagation
 # tests:
 uv run python phase0/test_phase0.py
+uv run python phase0/test_confound.py
 uv run python phase0/test_fragility.py
 uv run python phase0/test_propagation.py
 ```
@@ -112,6 +141,7 @@ Per metric: a `*_source.py` phantom (closed-form ground truth + sampler), an
 estimators module, a `calibrate_*.py` sweep, and a `test_*.py` known-answer suite.
 
 - coordination: `coupled_source.py` · `mi_estimators.py` · `calibrate.py` · `test_phase0.py`
+- coordination, discriminant validity: `confound_source.py` · `calibrate_confound.py` · `test_confound.py`
 - fragility: `fragility_source.py` · `curvature_estimators.py` · `calibrate_fragility.py` · `test_fragility.py`
 - propagation: `propagation_source.py` · `propagation_estimators.py` · `calibrate_propagation.py` · `test_propagation.py`
 - `results/` — calibration figures and CSVs.
