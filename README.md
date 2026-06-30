@@ -19,11 +19,12 @@ We have little settled practice for measuring what such a group does
 collectively. The closest tools look elsewhere: single-model methods —
 evaluation, interpretability, AI control — inspect one model at a time,
 and reveal little about the behavior of the group. The field is starting
-to publish collective metrics, but each is reported on one setup — a score
-tied to a particular environment, a signal defined for a single experiment —
-and whether those numbers survive a change of setup is not tested, so they
-rarely carry from one paper to the next, or from a lab setup to a
-deployment. And the reporting conventions that downstream safety and
+to publish collective metrics, and some test robustness across models or environments — but invariance is not
+yet treated as a property a measure must hold (the same coupling, read the same
+way, across structurally different setups), and the measures are rarely
+calibrated against known ground truth. So whether a published number reflects
+the group or the setup it ran in stays unclear, and such numbers rarely carry
+from one paper to the next, or from a lab setup to a deployment. And the reporting conventions that downstream safety and
 evaluation work will inherit are taking root now — before the measurement
 practice supporting them is sound.
 
