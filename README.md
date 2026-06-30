@@ -79,6 +79,17 @@ form — measuring estimator bias and the sampling noise floor directly, at
 - **misalignment-propagation** (contagion) — recovers the coefficient; the
   floor sets the budget at which faint contagion is detectable from zero.
 
+The coordination metric is also calibrated for **specificity** — that it does
+*not* fire on a shared-cause look-alike. On a two-knob synthetic phantom, a pure
+common cause (two agents driven by a shared context, with no link between them)
+drives plain mutual information to 0.64 bits while the conditional metric stays
+at zero within its noise floor; a genuine coupling still registers. This is the
+construct-validity check above made concrete on known ground truth — and the
+case that matters for real agents, where a shared base model or system prompt
+makes two agents behave alike with no influence passing between them.
+
+![Plain MI is fooled by a shared cause while conditional MI stays at zero](phase0/results/confound_heatmap.png)
+
 Each result is the estimator's resolution limit — the floor under which a
 later "this metric does or does not travel across setups" finding is
 interpretable rather than an estimation artifact. The next phase runs these
