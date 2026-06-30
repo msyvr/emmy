@@ -68,6 +68,13 @@ genuine coupling and not on a shared-cause look-alike.
 
 ![Discriminant validity: under a pure common cause plain MI is fooled while conditional MI stays at the floor (left); conditional MI still tracks a genuine link with the common cause present (right)](results/confound_calibration.png)
 
+And over the full grid -- plain MI rises with both the common cause and the genuine
+link, while conditional MI stays at zero along the no-link edge (`kappa_link = 0`)
+however strong the common cause (it does fall off at very high `kappa_cc` for a fixed
+link, as the per-context marginal concentrates):
+
+![Plain MI vs conditional MI over the (kappa_cc, kappa_link) grid: conditional MI stays at zero along the no-link edge regardless of the common cause](results/confound_heatmap.png)
+
 This is the calibration the **agent-specific confounds** turn on: two agents on the same
 base model, or sharing a system prompt or context, behave alike without exchanging
 influence. Those confounds are *observable* to an auditor, so they are conditionable —
