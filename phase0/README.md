@@ -7,7 +7,7 @@ here the ground truth is constructed, so estimator **bias** and the sampling
 **noise floor** are measured directly. This is the de-risk gate the rest of the
 program runs behind, at ~zero compute.
 
-All three battery metrics are calibrated here; the coordination metric additionally gets a discriminant-validity calibration (does it reject a common cause?).
+All three battery metrics are calibrated here; the coordination and propagation metrics additionally get discriminant-validity calibrations (do they reject a shared cause?).
 
 ## What each calibration reports
 
@@ -119,6 +119,28 @@ dose-sweep budget needed to claim a planted misalignment spread.
 
 Run: `uv run python phase0/calibrate_propagation.py`.
 
+## Misalignment-propagation — discriminant validity (spread vs. shared trigger)
+
+The calibration above uses an *interventional* dose — you plant the misalignment in
+the seed, so the contagion is causal by construction. An outside observer often
+cannot intervene: they see one agent misaligned and others misaligned, and must ask
+whether it *spread* (seed → target) or whether a *shared trigger* tripped both. The
+phantom (`propagation_confound_source.py`) adds that knob: `kappa_cc` is a shared
+trigger raising both the seed's and the targets' misalignment, independent of a
+genuine seed → target link (`kappa_link`). Two readings — a **naive** contagion slope
+(target rate among misaligned vs aligned seeds) and a **conditioned** slope (the same,
+stratified by the trigger and averaged).
+
+**Result:** under a pure shared trigger (`kappa_link = 0`), the naive slope climbs to
+**0.10** as `kappa_cc → 0.3` — a trigger looks like spreading — while the conditioned
+slope stays at **0.00** within its ±0.015 floor. With the trigger present
+(`kappa_cc = 0.3`), the conditioned slope still recovers genuine contagion near-exactly
+(0.10 → 0.30). So "did it spread?" is separable from "were both triggered?".
+
+![Propagation discriminant: a shared trigger inflates the naive contagion slope while the conditioned slope stays at zero (left); the conditioned slope still tracks genuine contagion with a trigger present (right)](results/propagation_confound_calibration.png)
+
+Run: `uv run python phase0/calibrate_propagation_confound.py`.
+
 ## Scope
 
 These calibrate metric *estimators* on known answers — they establish the floor
@@ -135,11 +157,13 @@ uv run python phase0/calibrate.py             # coordination
 uv run python phase0/calibrate_confound.py    # coordination: discriminant validity
 uv run python phase0/calibrate_fragility.py   # fragility
 uv run python phase0/calibrate_propagation.py # misalignment-propagation
+uv run python phase0/calibrate_propagation_confound.py  # propagation: discriminant validity
 # tests:
 uv run python phase0/test_phase0.py
 uv run python phase0/test_confound.py
 uv run python phase0/test_fragility.py
 uv run python phase0/test_propagation.py
+uv run python phase0/test_propagation_confound.py
 ```
 
 ## Files
@@ -151,4 +175,5 @@ estimators module, a `calibrate_*.py` sweep, and a `test_*.py` known-answer suit
 - coordination, discriminant validity: `confound_source.py` · `calibrate_confound.py` · `test_confound.py`
 - fragility: `fragility_source.py` · `curvature_estimators.py` · `calibrate_fragility.py` · `test_fragility.py`
 - propagation: `propagation_source.py` · `propagation_estimators.py` · `calibrate_propagation.py` · `test_propagation.py`
+- propagation, discriminant validity: `propagation_confound_source.py` · `calibrate_propagation_confound.py` · `test_propagation_confound.py`
 - `results/` — calibration figures and CSVs.
