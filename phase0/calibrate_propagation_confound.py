@@ -162,6 +162,55 @@ def plot(records: list[dict], path: Path) -> None:
     print(f"\nFigure -> {path}")
 
 
+def heatmap(records: list[dict], path: Path) -> None:
+    """Naive vs conditioned contagion slope over the full (kappa_cc, kappa_link) grid.
+
+    The naive slope rises with both knobs; the conditioned slope is flat along the
+    trigger axis (kappa_cc) -- it equals the genuine contagion kappa_link whatever
+    the shared trigger does.
+    """
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    ccs = sorted({r["kappa_cc"] for r in records})
+    links = sorted({r["kappa_link"] for r in records})
+    at_n = {(r["kappa_cc"], r["kappa_link"]): r for r in records if r["n"] == REPORT_N}
+    grid_naive = np.array([[at_n[(cc, lk)]["naive_mean"] for lk in links] for cc in ccs])
+    grid_cond = np.array([[at_n[(cc, lk)]["cond_mean"] for lk in links] for cc in ccs])
+    vmax = float(max(grid_naive.max(), grid_cond.max()))
+
+    fig, axes = plt.subplots(1, 2, figsize=(12.5, 5.4))
+    for ax, grid, title in (
+        (axes[0], grid_naive, "Naive contagion slope"),
+        (axes[1], grid_cond, "Conditioned contagion slope"),
+    ):
+        im = ax.imshow(grid, origin="lower", cmap="viridis", vmin=0.0, vmax=vmax, aspect="auto")
+        ax.set_xticks(range(len(links)))
+        ax.set_xticklabels([f"{x:.1f}" for x in links])
+        ax.set_yticks(range(len(ccs)))
+        ax.set_yticklabels([f"{y:.1f}" for y in ccs])
+        ax.set_xlabel("genuine contagion  kappa_link")
+        ax.set_ylabel("shared trigger  kappa_cc")
+        ax.set_title(title)
+        for i in range(len(ccs)):
+            for j in range(len(links)):
+                v = grid[i, j]
+                ax.text(j, i, f"{v:.2f}", ha="center", va="center", fontsize=9,
+                        color="white" if v < 0.55 * vmax else "black")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="slope")
+
+    fig.suptitle(
+        "Phase 0 discriminant validity -- naive vs conditioned contagion over the two-knob grid  (N = 10,000)\n"
+        "the naive slope rises with the shared trigger; the conditioned slope is flat along the trigger axis (kappa_cc)",
+        fontsize=11,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.89))
+    fig.savefig(path, dpi=130)
+    print(f"Heatmap -> {path}")
+
+
 def main() -> None:
     results_dir = Path(__file__).parent / "results"
     results_dir.mkdir(exist_ok=True)
@@ -169,6 +218,7 @@ def main() -> None:
     summarize(records)
     save_csv(records, results_dir / "propagation_confound_calibration.csv")
     plot(records, results_dir / "propagation_confound_calibration.png")
+    heatmap(records, results_dir / "propagation_confound_heatmap.png")
 
 
 if __name__ == "__main__":

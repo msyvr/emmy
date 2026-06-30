@@ -139,6 +139,12 @@ slope stays at **0.00** within its ±0.015 floor. With the trigger present
 
 ![Propagation discriminant: a shared trigger inflates the naive contagion slope while the conditioned slope stays at zero (left); the conditioned slope still tracks genuine contagion with a trigger present (right)](results/propagation_confound_calibration.png)
 
+And over the full grid — the naive slope rises with both the shared trigger and the
+genuine contagion, while the conditioned slope is flat along the trigger axis
+(`kappa_cc`), reading exactly the genuine contagion whatever the trigger does:
+
+![Naive vs conditioned contagion slope over the (kappa_cc, kappa_link) grid: the conditioned slope is constant along the trigger axis, equal to the genuine contagion](results/propagation_confound_heatmap.png)
+
 Run: `uv run python phase0/calibrate_propagation_confound.py`.
 
 ## Scope
