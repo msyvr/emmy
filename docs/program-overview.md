@@ -1,19 +1,21 @@
 # Measurement Foundations for Multi-Agent AI: Program Overview
 
-**Status:** Current synthesis, 2026-06-08. Pre-experiment. This document is the
-canonical public reference for the program; other documents will be added to `docs/`.
+**Status:** Updated 2026-06-30. Pre-experiment on LLM agents; Phase 0 estimator
+calibration is complete (see [`phase0/`](../phase0/)). This document is the canonical
+public reference for the program; other documents will be added to `docs/`.
 
 **Summary.** Emmy builds measurement foundations for multi-agent AI. The field is now
 publishing collective-behavior metrics for LLM-agent systems — fragility/antifragility,
-misalignment propensity, multi-agent evaluation suites, interaction-graph measures — but
-each is computed on a single setup, and none tests whether the metric survives a change
-of setup. Emmy takes that battery of published metrics and characterizes, for each, two
+misalignment propensity, multi-agent evaluation suites, interaction-graph measures — and
+some test robustness across models or environments, but invariance is not yet treated as a
+property a measure must establish, and the measures are rarely calibrated against known
+ground truth. Emmy takes that battery of published metrics and characterizes, for each, two
 things jointly: how much it travels across setup changes that should not move a genuine
 collective property (**invariance**), and whether it tracks a collective property that
 joint task-performance cannot separate (**construct validity**). Measurement is from
 action–observation streams, without privileged model access — the surface a third-party
 auditor actually has. Every metric is calibrated first against analytic synthetic
-collectives with known ground truth, so a printed estimator-noise floor makes each result
+collectives with known ground truth — a practice adapted from information dynamics — so a printed estimator-noise floor makes each result
 interpretable rather than an artifact of estimation. The work produces a paper and an
 open-source library — an open, reproducible map placing each metric in the invariant ×
 construct-valid plane. This is pre-experiment work, building on metrics the field has
@@ -29,8 +31,11 @@ practices are maturing. The tools built for the prior era characterize one model
 time: single-model evaluation and interpretability. The field is now publishing
 collective-level metrics — fragility/antifragility of multi-agent LLM systems,
 misalignment propensity for agentic systems, multi-agent evaluation suites,
-interaction-graph measures — but each is reported on a single setup, and none tests
-whether the metric survives a change of setup. Even applied practice shows the same shape:
+interaction-graph measures. Recent work is beginning to test robustness — Riedl
+([2026](https://arxiv.org/abs/2510.05174)) across backbone models, Colosseum
+([2026](https://arxiv.org/abs/2602.15198)) across environments — but invariance is not yet
+treated as a property a measure must hold, and the measures are rarely calibrated against
+known ground truth. Even applied practice shows the same shape:
 Anthropic's engineering guide to evaluating AI agents is organized entirely around
 _single_ agents — coding, conversational, research, computer-use — and names multi-agent
 collaboration as a frontier its techniques will still need to adapt to
@@ -40,7 +45,7 @@ Four consequences:
 
 - **Cross-paper claims do not compose.** A robustness or coordination finding reported in
   one evaluation setup does not transfer, because the collective metrics now being reported
-  are not known to travel beyond the setup that produced them.
+  are not characterized for whether they travel beyond the setup that produced them.
 - **Evaluation-setup dependence is implicit.** Every claim is conditional on backbone
   model, decoding seed, prompt phrasing, team size, communication topology, and task
   instance — but these dependencies are not characterized. Reproducibility is
@@ -79,7 +84,13 @@ in the battery, it characterizes two properties jointly:
 - **Construct validity** — whether the metric tracks a collective property that is
   deliberately planted (so the answer is known) and that joint task-performance cannot
   separate. A metric can be perfectly stable and still measure nothing; construct validity
-  is what tells invariant-and-meaningful apart from invariant junk.
+  is what tells invariant-and-meaningful apart from invariant junk. In practice this
+  includes discriminant validity against the confounds specific to AI agents — a shared
+  base model, system prompt, or context that makes agents behave alike with no influence
+  passing between them: a valid metric rises with a planted construct and stays flat under
+  such a shared cause. Phase 0 demonstrates this for the coordination and propagation
+  metrics — conditioning on the observable shared cause separates a genuine inter-agent
+  effect from a common-cause look-alike on known ground truth.
 
 The result is the map: each metric placed in the **invariant × construct-valid** plane,
 with a calibration phantom and a printed estimator-noise floor making every placement
@@ -199,7 +210,8 @@ literature scan, final selection pending a reimplementability pass:
 - **An interaction-graph / coordination measure** — a coordination or influence scalar
   built from the agent–agent interaction graph (e.g. lagged action correlation or
   transfer-entropy-weighted edges; algebraic connectivity). Emmy defines a clean reference
-  version where no single published one dominates.
+  version where no single published one dominates; the closest published instance is Riedl's
+  partial information decomposition of time-delayed mutual information (2026).
 - **A misalignment-propagation / contagion measure** — how a planted misalignment in one
   agent shows up in the collective's behavior (motivated by Anthropic's _AI Organizations_
   finding that collectives can be less aligned than their members).
@@ -318,7 +330,7 @@ multi-agent _AI organizations_
 can be more effective but _less aligned_ than the individual agents composing them, and
 argues such systems need testing for misalignment across organizational structures — the
 measurement no single-model check provides
-([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)). The Cooperative AI Foundation's _Multi-Agent Risks from Advanced AI_ ([Hammond et al., 2025](https://arxiv.org/abs/2502.14143)) catalogues the failure modes — miscoordination, conflict, collusion — that such an inspection layer would need to measure.
+([Anthropic, 2026](https://alignment.anthropic.com/2026/ai-organizations/)). The Cooperative AI Foundation's _Multi-Agent Risks from Advanced AI_ ([Hammond et al., 2025](https://arxiv.org/abs/2502.14143)) catalogues the failure modes — miscoordination, conflict, collusion — that such an inspection layer would need to measure. Recent work has begun to measure these behaviorally — e.g. Colosseum ([Nakamura et al., 2026](https://arxiv.org/abs/2602.15198)) audits LLM-agent collusion via regret against a cooperative optimum — though without the cross-setup invariance or known-ground-truth calibration emmy targets.
 
 **Why a comparability instrument is the precondition.** Today a collective-(mis)alignment
 metric reported by a vendor on its own setup cannot be trusted by an external auditor on a
