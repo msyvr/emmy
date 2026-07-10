@@ -10,6 +10,9 @@ Concrete work so far: the Phase 0 estimator calibrations in
 
 ## The gap
 
+One question runs under everything here: **do numbers about collectives mean
+anything beyond the setup that produced them?**
+
 AI agents increasingly work in groups — language-model agents that call
 tools and coordinate with one another, reinforcement-learning agents
 acting in a shared environment. These collectives are already moving
@@ -54,11 +57,20 @@ single-model methods aren't equipped to provide.
 
 The measurement depends only on agents' actions and observations, so it
 needs no privileged access to the underlying models — the surface a
-third-party evaluator actually has. And every metric is calibrated first
+third-party evaluator actually has. In multi-principal deployments — agents
+from different vendors or operators interacting in one arena — that surface
+is not a preference but the terrain: no single party holds privileged access
+to every agent, so the behavioral record is the only common evidence an
+auditor can work from. And every metric is calibrated first
 against synthetic systems with known ground truth — a practice adapted from
 information dynamics — so a printed
 estimator-noise floor makes each result interpretable rather than an
-artifact of estimation.
+artifact of estimation. The controlled setting is doing different work here
+than in most of the field: controlled environments usually *characterize*
+systems — where control is the limitation; emmy uses them to *calibrate*
+instruments — where control is the point, because calibration needs known
+ground truth. Invariance is then the licensed exit from the lab — what must
+hold before a lab number can say anything about a deployment.
 
 This is pre-experiment work; the claims are not yet validated. It measures
 behavior rather than internal cognition, so what a positive identifies is a

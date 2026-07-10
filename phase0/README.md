@@ -9,6 +9,12 @@ program runs behind, at ~zero compute.
 
 All three battery metrics are calibrated here; the coordination and propagation metrics additionally get discriminant-validity calibrations (do they reject a shared cause?).
 
+Why these three: one representative per family of the collective metrics the field is
+publishing — a coordination/dependence measure (conditional mutual information), a
+stress-response measure (curvature — the CAFE family), and a contagion measure
+(dose-response slope). The gate is representative, not exhaustive; the paper-1 battery is
+finalized by a reimplementability pass.
+
 ## What each calibration reports
 
 - **trueness** — does the estimate track the known value across the metric's
@@ -105,7 +111,11 @@ Run: `uv run python phase0/calibrate_fragility.py`.
 
 Plant a misalignment dose in a seed agent; the metric is the coefficient `beta` by
 which it raises the rest of the collective's misalignment (`0` = contained, `1` =
-full propagation — the *AI Organizations* mechanism, made controllable). The
+full propagation). The motivating finding is Anthropic's *AI Organizations* result —
+collectives can be less aligned than their members. That hazard was detected by ordinary
+evals; what needs a calibrated instrument is the follow-up question detection alone cannot
+answer — whether misalignment *spread* through the collective or tripped everywhere at
+once — which is exactly the discriminant calibration below. The
 phantom (`propagation_source.py`) has a known `beta`; the estimator
 (`propagation_estimators.py`) is the dose-response slope. The **floor sets the
 detection threshold** — when faint contagion is resolvable from none.
@@ -152,7 +162,11 @@ Run: `uv run python phase0/calibrate_propagation_confound.py`.
 These calibrate metric *estimators* on known answers — they establish the floor
 under which a later "this metric does / does not travel across LLM-agent setups"
 result is interpretable rather than an artifact of estimation. They do not, on
-their own, evidence cross-setup invariance. The **next phase** runs these
+their own, evidence cross-setup invariance. One further known gap: the discriminant
+phantoms model common *causes* (a shared context, a shared trigger); conditioning has a
+second failure mode they do not cover — conditioning on a common *effect* (state the
+agents themselves produced) can manufacture dependence — and a phantom for that collider
+case is not yet built. The **next phase** runs these
 calibrated estimators on small LLM-agent teams — the invariance sweep — with each
 metric's floor, established here, printed under the result.
 

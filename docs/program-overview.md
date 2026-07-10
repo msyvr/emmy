@@ -4,7 +4,9 @@
 calibration is complete (see [`phase0/`](../phase0/)). This document is the canonical
 public reference for the program; other documents will be added to `docs/`.
 
-**Summary.** Emmy builds measurement foundations for multi-agent AI. The field is now
+**Summary.** Emmy builds measurement foundations for multi-agent AI, organized around one
+question: **do numbers about collectives mean anything beyond the setup that produced
+them?** The field is now
 publishing collective-behavior metrics for LLM-agent systems — fragility/antifragility,
 misalignment propensity, multi-agent evaluation suites, interaction-graph measures — and
 some test robustness across models or environments, but invariance is not yet treated as a
@@ -28,12 +30,18 @@ already published.
 Multi-agent AI systems — large-language-model agent ensembles acting on a shared task or
 environment — are moving from research into deployment faster than their measurement
 practices are maturing. The tools built for the prior era characterize one model at a
-time: single-model evaluation and interpretability. The field is now publishing
+time: single-model evaluation and interpretability. And the deployments where collective
+risk is sharpest are **multi-principal** — agents from different vendors or operators
+composed into one system — where no single party holds privileged access to every agent,
+so the behavioral surface emmy measures on is not a methodological preference but the only
+common evidence an external evaluator will have. The field is now publishing
 collective-level metrics — fragility/antifragility of multi-agent LLM systems,
 misalignment propensity for agentic systems, multi-agent evaluation suites,
 interaction-graph measures. Recent work is beginning to test robustness — Riedl
-([2026](https://arxiv.org/abs/2510.05174)) across backbone models, Colosseum
-([2026](https://arxiv.org/abs/2602.15198)) across environments — but invariance is not yet
+([2026](https://arxiv.org/abs/2510.05174)), whose generalizability experiments re-run its
+emergence analysis across five backbone models; Colosseum
+([2026](https://arxiv.org/abs/2602.15198)) across environments and interaction
+topologies — but invariance is not yet
 treated as a property a measure must hold, and the measures are rarely calibrated against
 known ground truth. Even applied practice shows the same shape:
 Anthropic's engineering guide to evaluating AI agents is organized entirely around
@@ -141,7 +149,11 @@ The approach rests on a few commitments.
 4. **Calibration before spend.** Every metric's estimator is run first on analytic
    synthetic collectives with known values, establishing a trueness bound and an
    estimator-noise floor before any LLM-agent inference. A non-invariance result is
-   meaningless without a floor under it.
+   meaningless without a floor under it. The controlled setting is doing different work
+   here than in most of the field: controlled environments usually _characterize_
+   systems — where control is the limitation; emmy uses them to _calibrate_ instruments —
+   where control is the point, because calibration needs known ground truth. Invariance
+   is then the licensed exit from the lab.
 5. **Setup reflexivity.** Every claim reports the setup class under which it was produced
    _and_ the negative space it admits but does not measure. Reproducibility means
    setup-class reproducibility.
