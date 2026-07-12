@@ -125,6 +125,36 @@ seeds — not on state the agents produced.
 
 Run: `uv run python phase0/calibrate_collider.py`.
 
+## Coordination — cross-environment inversion (the number that travels is κ̂, not the bits)
+
+The invariance sweep's core move, exercised where the answer is known exactly. The *same*
+copy-mechanism coupling `kappa` is planted in two structurally different environments —
+lean (2 actions, 2 uniform contexts) and rich (8 actions, 3 skewed contexts) — and the raw
+conditional-MI readings differ **by construction**: at `kappa = 0.6` the closed forms give
+0.278 vs 1.083 bits — same coupling, 3.9× the bits (the ratio runs 5.6× → 3.3× across the
+sweep). Raw information values are alphabet- and structure-relative, so comparing them
+across environments compares the environments. That is the trap.
+
+The fix (`inversion.py`): each environment's calibration curve `f_E(kappa)` is known here
+in closed form (measured, on a real system); estimate the reading, invert the
+environment's *own* curve, and compare the recovered couplings.
+
+**Result:** at `N = 10,000`, the recovered couplings agree with the planted truth and with
+each other at **every point of the sweep** — `|khat_lean − khat_rich| ≤ 0.002`, an order
+of magnitude inside the combined floors — while the raw readings they came from differ by
+up to a bit and a half. The `khat` floor widens near `kappa = 0`, where MI's quadratic
+onset makes the curve flat: inversion is ill-conditioned exactly there — a property of the
+problem, printed rather than hidden.
+
+![Cross-environment inversion: raw readings diverge for the same coupling (left); inverted estimates from both environments collapse onto the identity line (right)](results/inversion_calibration.png)
+
+This is what "the measurement travels" means, operationally: not that raw bits agree —
+they provably cannot — but that the *calibrated estimate of the generative coupling* does.
+On real LLM-agent systems the closed-form curve is replaced by a measured dose-response
+curve on engineered couplings; the inversion logic is identical.
+
+Run: `uv run python phase0/calibrate_inversion.py`.
+
 ## Fragility / antifragility — response curvature
 
 The fragility family (CAFE and kin) reduces to the curvature of a stress-response
@@ -203,7 +233,8 @@ their own, evidence cross-setup invariance. The discriminant phantoms model comm
 complementary failure mode — conditioning on a common *effect* manufactures dependence —
 so the conditioning rule is calibrated from both sides. The **next phase** runs these
 calibrated estimators on small LLM-agent teams — the invariance sweep — with each
-metric's floor, established here, printed under the result.
+metric's floor, established here, printed under the result; the cross-environment
+inversion above is that sweep's core move, exercised where the curves are known exactly.
 
 ## Run
 
@@ -214,10 +245,12 @@ uv run python phase0/calibrate_fragility.py   # fragility
 uv run python phase0/calibrate_propagation.py # misalignment-propagation
 uv run python phase0/calibrate_propagation_confound.py  # propagation: discriminant validity
 uv run python phase0/calibrate_collider.py    # coordination: negative control (collider)
+uv run python phase0/calibrate_inversion.py   # coordination: cross-environment inversion
 # tests:
 uv run python phase0/test_phase0.py
 uv run python phase0/test_confound.py
 uv run python phase0/test_collider.py
+uv run python phase0/test_inversion.py
 uv run python phase0/test_fragility.py
 uv run python phase0/test_propagation.py
 uv run python phase0/test_propagation_confound.py
@@ -231,6 +264,7 @@ estimators module, a `calibrate_*.py` sweep, and a `test_*.py` known-answer suit
 - coordination: `coupled_source.py` · `mi_estimators.py` · `calibrate.py` · `test_phase0.py`
 - coordination, discriminant validity: `confound_source.py` · `calibrate_confound.py` · `test_confound.py`
 - coordination, negative control (collider): `collider_source.py` · `calibrate_collider.py` · `test_collider.py`
+- coordination, cross-environment inversion: `inversion.py` · `calibrate_inversion.py` · `test_inversion.py` (reuses `coupled_source.py`)
 - fragility: `fragility_source.py` · `curvature_estimators.py` · `calibrate_fragility.py` · `test_fragility.py`
 - propagation: `propagation_source.py` · `propagation_estimators.py` · `calibrate_propagation.py` · `test_propagation.py`
 - propagation, discriminant validity: `propagation_confound_source.py` · `calibrate_propagation_confound.py` · `test_propagation_confound.py`

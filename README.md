@@ -114,6 +114,15 @@ down: condition on the shared cause, never on the shared effect — and for
 deployed agents the shared effect is exactly the jointly-produced environment
 state an audit is most tempted to stratify by.
 
+And the invariance move itself is exercised where the answer is provable: the
+same coupling planted in two structurally different environments (2 vs 8
+actions, different context mixes) yields raw readings up to 5.6× apart —
+comparing raw bits across setups compares the setups — while inverting each
+environment's own calibration curve recovers couplings that agree to within
+0.002 across the whole sweep. The number that travels is the calibrated
+estimate of the coupling, not the bits; on real systems the closed-form curve
+becomes a measured dose-response curve, and the logic is identical.
+
 Each result is the estimator's resolution limit — the floor under which a
 later "this metric does or does not travel across setups" finding is
 interpretable rather than an estimation artifact. The next phase runs these
