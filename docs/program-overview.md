@@ -1,7 +1,9 @@
 # Measurement Foundations for Multi-Agent AI: Program Overview
 
-**Status:** Updated 2026-06-30. Pre-experiment on LLM agents; Phase 0 estimator
-calibration is complete (see [`phase0/`](../phase0/)). This document is the canonical
+**Status:** Updated 2026-07-11. Pre-experiment on LLM agents; Phase 0 is complete —
+estimator calibrations with printed noise floors, discriminant-validity phantoms, a negative
+control on the conditioning rule (the collider case), and a ground-truth demonstration of
+the cross-environment inversion move (see [`phase0/`](../phase0/)). This document is the canonical
 public reference for the program; other documents will be added to `docs/`.
 
 **Summary.** Emmy builds measurement foundations for multi-agent AI, organized around one
@@ -98,7 +100,12 @@ in the battery, it characterizes two properties jointly:
   passing between them: a valid metric rises with a planted construct and stays flat under
   such a shared cause. Phase 0 demonstrates this for the coordination and propagation
   metrics — conditioning on the observable shared cause separates a genuine inter-agent
-  effect from a common-cause look-alike on known ground truth.
+  effect from a common-cause look-alike on known ground truth. Phase 0 also pins the
+  conditioning rule from the other side — a negative control shows that conditioning on a
+  _jointly-produced_ state manufactures dependence between uncoupled agents — and
+  demonstrates the cross-setup move itself: the same planted coupling in two structurally
+  different environments yields raw readings up to 5.6× apart, while inverting each
+  environment's own calibration curve recovers couplings that agree within floors.
 
 The result is the map: each metric placed in the **invariant × construct-valid** plane,
 with a calibration phantom and a printed estimator-noise floor making every placement
@@ -255,6 +262,11 @@ what makes the invariance claim non-vacuous:
   the planted construct.
 
 The target shape, per metric: flat across (A), profiled across (B), tracking across (C).
+And where a construct dose is planted, cross-setup comparison has a stronger form than
+profiling: each setup's dose-response curve can be inverted, and comparison happens in
+recovered-dose units rather than raw metric units — raw readings may legitimately differ
+across setups while the recovered dose travels. Phase 0 demonstrates the move on
+closed-form ground truth (`calibrate_inversion`).
 
 **Substrate — small LLM-agent teams.** This is where the field's metrics live and where
 emmy's target users (auditors, operators) work, so invariance is characterized here

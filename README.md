@@ -4,9 +4,11 @@ Evaluation-invariant measurement for multi-agent AI systems.
 
 **Status:** Pre-experiment. The
 [program overview](docs/program-overview.md) is the canonical reference.
-Concrete work so far: the Phase 0 estimator calibrations in
-[`phase0/`](phase0/), and a smoke-test of the invariance idea in
-[`demo/`](demo/).
+Concrete work so far, all in [`phase0/`](phase0/): estimator calibrations
+with printed noise floors, discriminant-validity phantoms, a negative control
+on the conditioning rule (the collider case), and a ground-truth demonstration
+of the cross-environment inversion move — plus a smoke-test of the invariance
+idea in [`demo/`](demo/).
 
 ## The gap
 
