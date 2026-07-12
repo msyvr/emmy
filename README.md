@@ -105,6 +105,15 @@ makes two agents behave alike with no influence passing between them.
 
 ![Plain MI is fooled by a shared cause while conditional MI stays at zero](phase0/results/confound_heatmap.png)
 
+The conditioning rule itself is calibrated from both sides: a companion
+negative-control phantom (the *collider* case) demonstrates the opposite
+failure — two agents with zero coupling jointly produce an environment state,
+and conditioning on that state *manufactures* up to a full bit of apparent
+coordination, while plain MI correctly reads zero. The rule this pair pins
+down: condition on the shared cause, never on the shared effect — and for
+deployed agents the shared effect is exactly the jointly-produced environment
+state an audit is most tempted to stratify by.
+
 Each result is the estimator's resolution limit — the floor under which a
 later "this metric does or does not travel across setups" finding is
 interpretable rather than an estimation artifact. The next phase runs these

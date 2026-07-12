@@ -7,7 +7,7 @@ here the ground truth is constructed, so estimator **bias** and the sampling
 **noise floor** are measured directly. This is the de-risk gate the rest of the
 program runs behind, at ~zero compute.
 
-All three battery metrics are calibrated here; the coordination and propagation metrics additionally get discriminant-validity calibrations (do they reject a shared cause?).
+All three battery metrics are calibrated here; the coordination and propagation metrics additionally get discriminant-validity calibrations (do they reject a shared cause?), and a negative-control phantom calibrates the conditioning rule itself (conditioning on a shared *effect* manufactures dependence — the collider case below).
 
 Why these three: one representative per family of the collective metrics the field is
 publishing — a coordination/dependence measure (conditional mutual information), a
@@ -89,6 +89,42 @@ honest limit of any behavior-only measure.
 
 Run: `uv run python phase0/calibrate_confound.py`.
 
+## Coordination — negative control (the collider: conditioning on a jointly-produced state)
+
+The discriminant calibrations above validate conditioning where it is *right* — the context
+is a common cause, and conditioning strips a false positive out. This phantom
+(`collider_source.py`) calibrates the mirror case, where conditioning is the *mistake*: two
+agents with independent private memories — zero coupling, by construction — jointly produce
+a state `s` (a common *effect*; in causal-graph terms, a collider). Two knobs: behavioral
+persistence `rho` (how faithfully each agent's actions reflect its private memory) and
+state fidelity `lam` (how faithfully `s` records the joint product). Conditioning on `s`
+manufactures dependence with the closed-form value `1 − H_b((1 − rho1·rho2·lam)/2)` —
+governed by the single product, vanishing when any factor is zero, and reaching a full bit
+at `rho = lam = 1`.
+
+**Result:** plain MI reads the truth — **0.0000 within its ±0.0002 floor** across the whole
+grid — while conditional MI reads the manufactured value near-unbiased (at `rho = 0.75,
+lam = 1`: **0.2418 estimated vs 0.2421 true**, floor 0.0138; at `rho = lam = 1`: exactly
+**1 bit** fabricated between agents that share nothing). The estimator is faithful in both
+columns; the failure is the *conditioning choice*.
+
+![Collider negative control: plain MI reads the true zero while conditioning on the jointly-produced state manufactures dependence, rising with behavioral persistence and state fidelity](results/collider_calibration.png)
+
+And over the `(rho, lam)` grid — no coupling exists anywhere on it; every nonzero cell in
+the conditional panel is fabricated by the conditioning itself:
+
+![Plain MI vs conditional MI over the (rho, lam) grid: plain MI is zero everywhere (the truth); conditional MI rises with the product rho^2 * lam](results/collider_heatmap.png)
+
+Together with the discriminant calibrations this pins the conditioning rule from both
+sides: **condition on the shared cause; never on the shared effect.** For LLM-agent audits
+the effect case is the generic trap, not an exotic one — the environment state at time t (a
+shared scratchpad, a market price, a task artifact) is a product of both agents' earlier
+actions, and an audit that stratifies on it fabricates exactly the coordination it is
+looking for. Condition on exogenous inputs — task specification, configuration, episode
+seeds — not on state the agents produced.
+
+Run: `uv run python phase0/calibrate_collider.py`.
+
 ## Fragility / antifragility — response curvature
 
 The fragility family (CAFE and kin) reduces to the curvature of a stress-response
@@ -162,11 +198,10 @@ Run: `uv run python phase0/calibrate_propagation_confound.py`.
 These calibrate metric *estimators* on known answers — they establish the floor
 under which a later "this metric does / does not travel across LLM-agent setups"
 result is interpretable rather than an artifact of estimation. They do not, on
-their own, evidence cross-setup invariance. One further known gap: the discriminant
-phantoms model common *causes* (a shared context, a shared trigger); conditioning has a
-second failure mode they do not cover — conditioning on a common *effect* (state the
-agents themselves produced) can manufacture dependence — and a phantom for that collider
-case is not yet built. The **next phase** runs these
+their own, evidence cross-setup invariance. The discriminant phantoms model common
+*causes* (a shared context, a shared trigger); the collider phantom covers the
+complementary failure mode — conditioning on a common *effect* manufactures dependence —
+so the conditioning rule is calibrated from both sides. The **next phase** runs these
 calibrated estimators on small LLM-agent teams — the invariance sweep — with each
 metric's floor, established here, printed under the result.
 
@@ -178,9 +213,11 @@ uv run python phase0/calibrate_confound.py    # coordination: discriminant valid
 uv run python phase0/calibrate_fragility.py   # fragility
 uv run python phase0/calibrate_propagation.py # misalignment-propagation
 uv run python phase0/calibrate_propagation_confound.py  # propagation: discriminant validity
+uv run python phase0/calibrate_collider.py    # coordination: negative control (collider)
 # tests:
 uv run python phase0/test_phase0.py
 uv run python phase0/test_confound.py
+uv run python phase0/test_collider.py
 uv run python phase0/test_fragility.py
 uv run python phase0/test_propagation.py
 uv run python phase0/test_propagation_confound.py
@@ -193,6 +230,7 @@ estimators module, a `calibrate_*.py` sweep, and a `test_*.py` known-answer suit
 
 - coordination: `coupled_source.py` · `mi_estimators.py` · `calibrate.py` · `test_phase0.py`
 - coordination, discriminant validity: `confound_source.py` · `calibrate_confound.py` · `test_confound.py`
+- coordination, negative control (collider): `collider_source.py` · `calibrate_collider.py` · `test_collider.py`
 - fragility: `fragility_source.py` · `curvature_estimators.py` · `calibrate_fragility.py` · `test_fragility.py`
 - propagation: `propagation_source.py` · `propagation_estimators.py` · `calibrate_propagation.py` · `test_propagation.py`
 - propagation, discriminant validity: `propagation_confound_source.py` · `calibrate_propagation_confound.py` · `test_propagation_confound.py`
