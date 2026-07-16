@@ -11,9 +11,10 @@ All three battery metrics are calibrated here; the coordination and propagation 
 
 Why these three: one representative per family of the collective metrics the field is
 publishing — a coordination/dependence measure (conditional mutual information), a
-stress-response measure (curvature — the CAFE family), and a contagion measure
-(dose-response slope). The gate is representative, not exhaustive; the paper-1 battery is
-finalized by a reimplementability pass.
+stress-response measure (response curvature — emmy's reference fragility statistic; see
+the correction note in that section), and a contagion measure (dose-response slope). The
+gate is representative, not exhaustive; the paper-1 battery is finalized by a
+reimplementability pass.
 
 ## What each calibration reports
 
@@ -157,8 +158,14 @@ Run: `uv run python phase0/calibrate_inversion.py`.
 
 ## Fragility / antifragility — response curvature
 
-The fragility family (CAFE and kin) reduces to the curvature of a stress-response
-`R(sigma)`: `< 0` is fragile (concave), `> 0` antifragile (convex). The phantom
+Response curvature is emmy's **reference statistic** for the fragility family: the
+curvature of a stress-response `R(sigma)` — `< 0` fragile (concave), `> 0` antifragile
+(convex). *(Correction, 2026-07-16: an earlier revision said the CAFE framework "reduces to"
+this curvature. A full read of the CAFE paper refutes that — its central statistic is a
+distributional Jensen gap, the dispersion difference between the designed and the
+reconstructed effective stress distributions (its Eqs. 20–22), a different quantity that
+needs its own phantom. The phantom below calibrates the reference curvature statistic, not
+CAFE-as-published.)* The phantom
 (`fragility_source.py`) has a known curvature, observed as noisy replicate
 rollouts; the estimator (`curvature_estimators.py`) fits the curve. Curvature is a
 weak second-order feature, so the **floor sets the budget at which the sign is
